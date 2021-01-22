@@ -29,7 +29,7 @@ docker-compose up -d plan-management-db
 To start services: 
 
 ```
-docker-compose up -d plan-management-db
+docker-compose up -d
 ```
 
 To stop services:
