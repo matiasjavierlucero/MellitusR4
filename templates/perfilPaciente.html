@@ -1,0 +1,602 @@
+{% extends 'layout.html' %} {% block title %} Perfil del Paciente {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1  or session['idTusu'] ==3%}
+{% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+</div>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+
+<div class="row w-100 m-2">
+    <!-- Columna Formulario-->
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+        <div class="row ml-1 justify-content-between">
+            <h4>Ficha Paciente</h4>
+            <div class="" id="BtnEditSave">
+                <button class="btn btn-info" id="btnEditar"> Editar Datos Personales</button>
+                <button class="btn btn-success d-none" id="btnGuardar"> Guardar Datos Personales </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                <label for="nombrePaciente"> Apellido, Nombre </label>
+                <input type="text" class="form-control cambios" name="nombrePaciente" id="nombrePaciente"
+                    placeholder="Nombre" required="required" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="tipoDocPaciente"> Tipo Documento </label>
+                <select id="tipoDocPaciente" name="tipoDocPaciente" class="form-control cambios" required="required"
+                    disabled>
+                    {% for tipoDocProfesional in tiposDocProfesional %}
+                    <option value="{{tipoDocProfesional.0}}"> {{tipoDocProfesional.1}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="numeroDocPaciente"> Número </label>
+                <input type="text" class="form-control cambios" name="numeroDocPaciente" id="numeroDocPaciente"
+                    placeholder="N° de Documento" required="required" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="telefonopaciente">Teléfono </label>
+                <input type="tel" name="telefonoPaciente" placeholder="N° de teléfono" class="form-control cambios"
+                    id="telefonopaciente" maxlength="10" required="required" disabled>
+            </div>
+        </div>
+        <hr>
+        <div class="form-row d-flex align-items-end">
+            <div class="form-group col-md-2">
+                <label for="sexoPaciente "> Sexo </label>
+                <select id="sexoPaciente" name="sexoPaciente" class="form-control cambios" required="required" disabled>
+                    
+                    <option value="1"> Femenino </option>
+                    <option value="0"> Masculino </option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="fechaNacPaciente"> Fecha de Nacimiento </label>
+                <input type="date" class="form-control cambios" name="fechaNacPaciente" id="fechaNacPaciente" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="grupoSangPaciente"> Grupo sanguíneo </label>
+                <select id="grupoSangPaciente" name="grupoSangPaciente" class="form-control cambios" disabled>
+                    <option value="{{GrSgPac}}"> {{GrSgPac}} </option>
+                    {% for tipoGSPaciente in tiposGSPaciente %}
+                    <option value="{{tipoGSPaciente}}"> {{tipoGSPaciente}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="religionPaciente"> Religion </label>
+                <select id="religionPaciente" name="religionPaciente" class="form-control cambios" disabled>
+                    {% for religionPaciente in listaReligiones %}
+                    <option value="{{religionPaciente.0}}"> {{religionPaciente.1}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="paisProfesional"> Pais </label>
+                <select id="paisProfesional" name="paisProfesional" class="form-control cambios" disabled>
+                    {% for pais in listaPaisProvLoc %}
+                    {% if pais.0 == LocProvPais.5 %}
+
+                    <option value="{{LocProvPais.4}}">{{LocProvPais.5}}</option>
+
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="provinciaProfesional"> Provincia </label>
+                <select id="provinciaProfesional" name="provinciaProfesional" class="form-control cambios" disabled>
+                    {% for provincia in listaPaisProvLoc %}
+                    {% if provincia.3 == LocProvPais.2 %}
+                    <option value="{{LocProvPais.2}}">{{LocProvPais.3}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="localidadProfesional"> Localidad </label>
+                <select id="localidadProfesional" name="localidadProfesional" class="form-control cambios" disabled>
+                    {% for localidad in listaPaisProvLoc %}
+                    {% if localidad.6 == LocProvPais.0 %}
+
+                    <option value="{{LocProvPais.0}}">{{LocProvPais.1}}</option>
+
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="domicilioPaciente"> Domicilio </label>
+                <input type="text" class="form-control cambios" name="domicilioPaciente" id="domicilioPaciente"
+                    placeholder="Domicilio" required="required" disabled>
+            </div>
+        </div>
+        <div class="form-row d-flex align-items-end">
+            <div class="form-group col-md-2">
+                <label for="nacionalidadPaciente"> Nacionalidad </label>
+                <select id="nacionalidadPaciente" class="form-control cambios" disabled>
+                    <div id="optNac"></div>
+                    {% for nacionalidadProfesional in nacionalidadProfesional %}
+                    <option value="{{nacionalidadProfesional.0}}"> {{nacionalidadProfesional.1}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <hr>
+        <div class="form-row d-flex align-items-end">
+
+            <div class="form-group col-md-3">
+                <label for="obraSocialPaciente"> Obra Social-Plan </label>
+                <!-- <select id="obraSocialPaciente" name="obraSocialPaciente" class="form-control" disabled>
+                    <option value="">Elija O.Social</option>
+                </select> -->
+                <select id="OSPaciente" name="obraSocialPaciente" class="form-control">
+
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="numAfiliadoPaciente"> N Afiliado </label>
+                <input type="text" class="form-control" name="numAfiliadoPaciente" id="numAfiliadoPaciente"
+                    placeholder="Numero de afiliado" required="required" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="fechaObSoPaciente"> Fecha Inicio en OS </label>
+                <input type="date" class="form-control" name="fechaObSoPaciente" id="fechaObSoPaciente" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <button class="btn btn-info" id="ModObrSoc">Modificar Obras Sociales</button>
+            </div>
+
+        </div>
+        <div class="form-row d-flex align-items-end">
+            <div class="form-group col-md-3">
+                <label for="observacionPaciente"> Observaciones </label>
+                <textarea class="form-control" id="observacionPaciente" name="observacionPaciente" maxlength="89"
+                    rows="3"></textarea>
+            </div>
+
+
+        </div>
+        </form>
+    </div>
+
+    <!-- Columna Historial Turnos-->
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 w-100 ml-auto">
+        <h4>Historial Turnos</h4>
+        <table class="table-xs w-100 table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Profesional</th>
+                </tr>
+            </thead>
+            <tbody id="turnospaciente">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal de Alerta -->
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Modal Confirma Cambios Datos Personales-->
+<div class="modal fade" id="modalCambiosPersonales" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Usted ha realizado cambios</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Desea Confirmar Los Cambios?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmacambios">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal OBRA SOCIALES-->
+<div class="modal fade" id="modalObraSocial" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestion Obra Sociales</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row d-flex justify-content-between">
+                    <div class="form-group col-lg-4 col-sm-1">
+                        <label for="obraSocialProfesional"> Obra Social </label>
+                        <select id="obraSocialPaciente" name="obraSocialProfesional" class="form-control">
+                            <option value="">Elija O.Social</option>
+                        </select>
+
+                        <label for="planObSoProfesional"> Plan Obra Social </label>
+                        <select id="planObSoPaciente" name="planObSoProfesional" class="form-control">
+                            <option value="">Elija Plan</option>
+                        </select>
+                        <button class="btn btn-info mt-3" id="AgObSoc">Agregar</button>
+                    </div>
+
+                    <div class="form-group col-lg-6 col-sm-1">
+                        <h5>OBRAS SOCIALES ACTUALES</h5>
+                        <table class="table-sm table-striped w-100" id='obraSocialPlanProfesional'>
+                            <tr>
+                                <th scope="col">O.SOCIAL</th>
+                                <th scope="col">PLAN</th>
+                                <th>Acciones</th>
+                            </tr>
+                            <tbody id="OsActuales">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Confirma Bloqueo de Plan-->
+<div class="modal fade" id="modalbloquear" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atencion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Desea Bloquear el Plan?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmabloqueo">Bloquear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Confirma Desbloqueo de Plan-->
+<div class="modal fade" id="modalactivar" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atencion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Desea Reactivar el Plan?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmadesbloqueo">Activar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    nombrepaciente = '{{nombrepaciente}}'
+    idPaciente = '{{idPaciente}}'
+    LocProvPais = '{{LocProvPais.0}}';
+
+
+    var datos;
+    async function setDatos() {
+        datos = await $.getJSON("static/turnos.json");
+    }
+
+    var DPac;
+    async function DatosPaciente() {
+        DPac = await $.getJSON("static/paciente.json");
+    }
+
+
+    function listaturnos(variable) {
+        listaturnospaciente = []
+        rowlistaturnos = []
+        datos.forEach(element => {
+            if (element.title == variable) {
+                diahora = element.start
+                diahora = diahora.toString()
+                diaTurPac = diahora.substr(0, 10)
+                dia=diaTurPac.substr(8,2)
+                mes= diaTurPac.substr(5,2)
+                anio= diaTurPac.substr(0, 4)
+                diamesanio= String(dia + '-' + mes + '-' + anio)
+                horaTurPac = diahora.substr(11, 19)
+                listaturnospaciente.push('<tr><td>' + diamesanio+ '</td><td>' + horaTurPac + '</td><td>' + element.profesional + '</td></tr>')
+
+            }
+        });
+        $("#turnospaciente").html(listaturnospaciente)
+
+    }
+
+    async function init() {
+        await setDatos(); // se espera que acabe el get de datos y luego se sigue
+        listaturnos(nombrepaciente);
+    }
+
+    init()
+
+
+    function cargar(valor) {
+        DPac.forEach(element => {
+            console.log(element)
+            if (element.IdPaciente == valor) {
+                NombreP = element.Nombre
+                IdPaciente = element.IdPaciente
+                FechaN = element.FNac
+                DniP = element.Dni
+                TelP = element.Telefono
+                DomP = element.Domicilio
+                RelP = element.Religion
+                IdNacP = element.IdPais
+                NacP = element.NomPais
+                Sexo = element.Sexo
+                console.log(NombreP)
+                $("#nombrePaciente").attr({ "placeholder": NombreP, "value": NombreP })
+                $("#numeroDocPaciente").attr({ "placeholder": DniP, "value": DniP })
+                $("#domicilioPaciente").attr({ "placeholder": DomP, "value": DomP })
+                $("#telefonopaciente").attr({ "placeholder": TelP, "value": TelP })
+                $("#fechaNacPaciente").attr({ "placeholder": FechaN, "value": FechaN })
+                $("#EdaPac").attr({ "placeholder": 30, "value": 30 })
+                $("#optNac").html('<option id="optNac" value="' + IdNacP + '">' + NacP + '</option>')
+                $("#religionPaciente").attr({ "placeholder": RelP, "value": RelP })
+                optOSP = element.ObraSocial.map((item) => '<option value="' + item.IdPacPlan + '">' + item.NomOSoc + '-' + item.Plan + '</option>')
+                $('#OSPaciente').html(optOSP)
+                //Sexo Paciente
+
+
+                if (Sexo === 0) {
+                    $("#sexoPaciente").html('<option value="0"> Masculino </option><option value="1"> Femenino </option>')
+                } else {
+                    $("#sexoPaciente").html('<option value="1"> Femenino </option><option value="0"> Masculino </option>')
+                } 
+
+
+                //Llevo las obras sociales al modal, para no crear otra funcion
+                
+                ObActuales = element.ObraSocial.map((item) => '<tr><td>' + item.NomOSoc + '</td><td>' + item.Plan + '</td><td><button class="btn btn-danger act'+item.ActPlan+'" id="desactivarObra" value=' + item.IdPlan + ' onclick=desactivarOs(' + item.IdPlan + ')> Desactivar </button> </td><tr>')
+                $('#OsActuales').html(ObActuales)
+                
+
+            }
+        }
+        )
+    }
+
+    async function init_formulario() {
+        await DatosPaciente(); // se espera que acabe el get de datos y luego se sigue
+        cargar(idPaciente);
+    
+    }
+
+    init_formulario()
+
+
+    //VERIFICO SI HAY CAMBIOS EN EL FORMULARIO  DE DATOS PERSONALES
+    $("#btnEditar").click(function () {
+        $(".cambios").removeAttr('disabled')
+    })
+    //CUALQUIER CAMBIO EN EL FORMULARIO DE DATOS PESONALES, ACTIVA EL BOTON GUARDAR DATOS PERSONALES
+    $(".cambios").change(function () {
+        $("#btnGuardar").removeClass("d-none").addClass("d-block");
+        $("#btnEditar").addClass("d-none")
+    });
+
+    $("#btnGuardar").click(function () {
+        $("#modalCambiosPersonales").modal()
+        $("#confirmacambios").click(function () {
+            NomPac = $("#nombrePaciente").val()
+            TipoDni = $("#tipoDocPaciente").val()
+            NumDoc = $("#numeroDocPaciente").val()
+            TelPac = $("#telefonopaciente").val()
+            SexoPac = $("#sexoPaciente").val()
+            FecNac = $("#fechaNacPaciente").val()
+            GrupSan = $("#grupoSangPaciente").val()
+            RelPac = $("#religionPaciente").val()
+            PaisPac = $("#paisProfesional").val()
+            ProvPac = $("#provinciaProfesional").val()
+            LocPac = $("#localidadProfesional").val()
+            DomPac = $("#domicilioPaciente").val()
+            NacionP = $("#nacionalidadPaciente").val()
+
+            $.ajax({
+                url: 'ModDatosPaciente',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    'IdPaciente': idPaciente,
+                    "NomPac": NomPac,
+                    "TipoDni": TipoDni,
+                    "NumDoc": NumDoc,
+                    "TelPac": TelPac,
+                    "SexoPac": SexoPac,
+                    "FecNac": FecNac,
+                    "GrupSan": GrupSan,
+                    "RelPac": RelPac,
+                    "LocPac": LocPac,
+                    "DomPac": DomPac,
+                    "NacionP": NacionP,
+                }]),
+                success: function (data) {
+                    if (data.Mensaje == 'Correcto') {
+                        $("#modalCambiosPersonales").modal('toggle')
+                        $("#confirmacionrecarga").html("Se modificaron correctamente los datos del Paciente")
+                        $("#mensajedealerta").modal()
+                        setTimeout(location.reload(true), 2000)
+                    }
+                }
+            });
+        })
+    })
+    //OBRAS SOCIALES------------------------------------------------------------
+    $("#ModObrSoc").click(function () {
+        $("#modalObraSocial").modal()
+        $(".act1").removeClass("btn-danger").addClass("btn-success").html("Activar").removeAttr("onclick").attr("onclick","activar($(this).val())")
+    })
+
+
+
+    //Agregar Obra Social
+    $("#AgObSoc").click(function () {
+        ObraSocialPaciente = $("#obraSocialPaciente").val()
+        PlanObraSocialPaciente = $("#planObSoPaciente").val()
+        $.ajax({
+            url: 'AgObSocPaciente',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'IdPlan': PlanObraSocialPaciente,
+                'IdPaciente': IdPaciente,
+            }]),
+            success: function(data){
+              
+                if(data.Mensaje=='Correcto'){
+                $("#modalObraSocial").modal('toggle')
+                $("#confirmacionrecarga").html("Se agrego correctamente un nuevo Plan para el Paciente...")
+                $("#mensajedealerta").modal()
+                setTimeout(location.reload(true),2000)
+                }if (data.Mensaje == 'Error'){
+                  alert('El plan ya esta cargado para este paciente')
+                }
+            }
+        });
+    })
+
+
+    //Desactivar Obra Social
+    function desactivarOs(plan) {
+        idPlan = plan;
+        $("#modalObraSocial").modal('toggle');
+        $("#modalbloquear").modal();
+        $("#confirmabloqueo").click(function () {
+            $.ajax({
+                url: 'DesactivarOsPaciente',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    'IdPlan': idPlan,
+                    'IdPaciente': IdPaciente,
+                }]),
+                success: function (data) {
+                if (data.Mensaje == 'Correcto') {
+                    $("#modalbloquear").modal('toggle')
+                    $("#confirmacionrecarga").html("Se desactivo correctamente un nuevo Plan para el Paciente...")
+                    $("#mensajedealerta").modal()
+                    setTimeout(location.reload(true), 2000)
+                    }
+                }
+            });
+            
+        })
+    }
+
+    function activar(id) {
+        idPlan = id;
+        $("#modalObraSocial").modal('toggle');
+        $("#modalactivar").modal();
+        $("#confirmadesbloqueo").click(function () {
+            $.ajax({
+                url: 'ActivarOsPaciente',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    'IdPlan': idPlan,
+                    'IdPaciente': IdPaciente,
+                }]),
+                success: function (data) {
+                    if (data.Mensaje == 'Correcto') {
+                        $("#modalactivar").modal('toggle')
+                        $("#confirmacionrecarga").html("Se reactivo correctamente un nuevo Plan para el Paciente...")
+                        $("#mensajedealerta").modal()
+                        setTimeout(location.reload(true), 2000)
+                    }
+                }
+            });
+            
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endif %}
+{% if session['idTusu'] ==2 %}
+<div class="container w-50 m-auto">
+    <div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-title">Usted no tiene permisos para acceder a esta seccion</h4>
+            <p class="card-text">Sera redirigido al Inicio</p>
+        </div>
+        <a href="/" class="btn btn-info">Volver</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

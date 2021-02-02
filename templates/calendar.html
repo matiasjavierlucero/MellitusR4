@@ -1,0 +1,1399 @@
+{% extends 'layout.html' %} 
+{% block title %} Calendario {% endblock %}
+{% block meta %}
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Last-Modified" content="0">
+<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+<meta http-equiv="Pragma" content="no-cache">
+{% endblock %}
+{% block body %}
+
+<style>
+  .fc-time-grid-event.fc-event.fc-start.fc-end{
+    background-color: rgb(104, 9, 9);
+    padding: 0%;
+    border-color: deeppink;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+</style>
+
+<div class="jm-loadingpage"></div>
+<div class="container">
+  <div class="col-12 text-center">
+    <div class="row d-flex justify-content-between mt-2 mb-2">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+        <h5 for="selectprofesional">Profesional</h5>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+        <select class="form-control" name="selectprofesional" id="selectprofesional" w-auto require>
+          <option value="">Seleccione un Profesional</option>
+          {%for pro in profesionales%}
+          <option value="{{pro.0}}">{{pro.1}}</option>
+          {%endfor%}
+        </select>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+              <button class="btn btn-success  justify-content-end" id="bq-dia">Bloquear dia <i class="fa fa-ban" aria-hidden="true"></i></button>
+
+      </div>
+        
+    </div>
+    <hr>
+    <div class="row text-center d-flex justify-content-between m-0">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <h5>Referencia</h5>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <p id="turres" style="border-radius: 9%;">Turno Reservado</p>
+      </div>
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">       
+        <p id="turcon" style="color: white;border-radius: 9%;"> Turno Confirmado </p>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <p id="turesp" style="color: white;border-radius: 9%;"> En sala de Espera </p>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <p id="turate" style="color: white;border-radius: 9%;"> Paciente Atendido </p>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <p id="turcan" style="color: white;border-radius: 9%;"> Turno Cancelado </p>
+      </div>
+
+      
+    </div>
+    <hr>
+    <div class="row row-calendar">
+      <div id="calendar" class="w-auto" > </div>
+    </div>  
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+////////////////////
+
+function cargarPacientes(){$.ajax({
+      url: 'cargarPaciente',
+      type: 'post',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        if (data.Mensaje == 'Correcto') {
+          console.log('Anda')
+          DPac=data.Data;
+          Pacientes = DPac.map((item) => '<tr class="h-auto"><td>' + item.Nombre + '</td><td>' + item.Dni + '<td>' + item.FNac + '</td><td>'+ item.ObraSocial[0].NomOSoc+'</td><td><button type="submit" class="btn btn-primary" id="" onclick="cargar(' + item.IdPaciente + ')">Seleccionar</button></td></tr>')        
+            $('#tablaPaciente').html(Pacientes)
+          ;
+        }
+      }
+    })}
+cargarPacientes()
+////////////////  
+  
+  function cargar(valor) {
+    DPac.forEach(element => {
+      if (element.IdPaciente == valor) {
+        NombreP = element.Nombre
+        IdPaciente = element.IdPaciente
+        FechaN = element.FNac
+        DniP = element.Dni
+        TelP = element.Telefono
+        DomP = element.Domicilio
+        RelP = element.Religion
+        NacP = element.NomPais
+
+        $("#NomPac").attr({ "placeholder": NombreP, "value": NombreP, "disabled": true })
+        $("#NDoc").attr({ "placeholder": DniP, "value": DniP, "disabled": true })
+        $("#DirPac").attr({ "placeholder": DomP, "value": DomP, "disabled": true })
+        $("#TelPac").attr({ "placeholder": TelP, "value": TelP, "disabled": true })
+        $("#FecPac").attr({ "placeholder": FechaN, "value": FechaN, "disabled": true })
+        $("#EdaPac").attr({ "placeholder": 30, "value": 30, "disabled": true })
+        $("#Nacionalidad").html(NacP)
+        $("#RegPac").attr({ "placeholder": RelP, "value": RelP, "disabled": true })
+        opciones = element.ObraSocial.map((item) => '<option value="' + item.IdPacPlan + '">' + item.NomOSoc + '-' + item.Plan +'-'+ item.ActPlan +'</option>')
+        $('#MutPac').html(opciones)
+        $("#modalLista").modal('toggle')//cierro el modal
+        $("#modalCrearTurno").modal('show')//vuelvo a mostrar el crear
+
+      }
+    }
+    )}
+
+
+$("#selectprofesional").change(function recarga(){
+  //events= ''
+  document.getElementById('calendar').innerHTML = ''
+ 
+  async function PrestacionEsp() {
+    PracEsp = await $.getJSON("static/practica.json");
+  }
+  PrestacionEsp();
+  var tiempo = '{{tiempoatencion}}'
+  var a = tiempo.split(':'); // split it at the colons
+  // minutes are worth 60 seconds. Hours are worth 60 minutes.
+  var duracion = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+  
+
+    
+    idProfesional = $("#selectprofesional").val()
+    idEspecialidad = $("#selectespecialidad").val()
+    nombreProfesional= $('select[name="selectprofesional"] option:selected').text()
+    nombreEspecialidad= $('select[name="selectespecialidad"] option:selected').text()
+    idPacientePlan = $("#obraSocialPac").val()
+    
+    $.ajax({
+        url: 'MostrarTurnos',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify([{
+            'idProfesional': idProfesional,
+        }]),
+        success: function (data) {
+            if (data.Mensaje == 'Correcto') {
+              valuepordefecto=data.EspecialidadProfesional[0][1]
+              optionEsp=data.EspecialidadProfesional.map((item) =>('<option value="'+item[1]+'">'+item[0]+'</option>'));
+              $("#EspecialidadProf").html('<option value="' + valuepordefecto + '">Seleccione una Especialidad</option>'+optionEsp)
+                
+                    if((data.Horarios.length)>0){
+
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar =  new FullCalendar.Calendar(calendarEl, {
+                      plugins: ['dayGrid', 'interaction', 'timeGrid', 'list', 'bootstrap'],
+                      defaultView: 'timeGridWeek',  //Otra opcion es timeGridWeek, creo que la mas comoda
+                      themeSystem: 'bootstrap',    //Tema
+                      slotDuration: '00:10:00',
+                      slotLabelInterval: '00:10:00',
+                      eventOverlap: false,//No deja poner un evento sobre otro, o al menos eso deberia hacer
+                      minTime: "07:00:00",
+                      maxTime: "20:00:00",
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      locale: 'es',
+                      omitZeroMinute: false,
+                      meridiem: 'short',
+                      businessHours: data.Horarios,
+
+                      hiddenDays: [0],
+
+                      //Fuente de cada boton
+                      close: 'fa-times',
+                      prev: 'fa-chevron-left',
+                      next: 'fa-chevron-right',
+                      prevYear: 'fa-angle-double-left',
+                      nextYear: 'fa-angle-double-right',
+
+                      //Botonera superior
+                      header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'timeGridWeek,listWeek',
+                      },
+
+                      //EVENTOS
+                      events: data.Turnos,
+                      overlap: false,
+                      navLinks: true,
+
+                      //CLICK SOBRE UN DIA////////////////////////////////////////////////////////
+                      dateClick: function (info, jsEvent) {
+                        fecha = new Date(info.dateStr);//convierto el numero en Dato
+
+                        //Agrego los 0, para cuando la hora o los minutos es menor a 10
+                        function addZero(i) {
+                          if (i < 10) {
+                            i = "0" + i;
+                          }
+                          return i;
+                        }
+
+                        //Creo las variables hora, minuto, año, mes y dia
+                        hora = addZero(fecha.getHours());
+                        minutos = addZero(fecha.getMinutes());
+                        anio = addZero(fecha.getFullYear());
+                        mes = addZero(fecha.getMonth() + 1);
+                        dia = addZero(fecha.getDate());
+
+                        //Dia y Hora de Inicio
+                        var Day = anio + '-' + mes + '-' + dia; //var Day = info.dateStr.substr(0,10); // ----------> Esta es una opcion menos coloquial de conseguir la fecha
+                        var HourStart = hora + ':' + minutos;  //var HourStart =info.dateStr.substr(12,4); Otra forma de conseguir la fecha
+
+                        //Hora de finalizacion
+                        var milisegundosfin = fecha.setMinutes(fecha.getMinutes());
+                        var date = new Date(milisegundosfin);
+                        var horafin = addZero(date.getHours());
+                        var minutosfin = addZero(date.getMinutes());
+                        var HourEnd = horafin + ':' + minutosfin;
+
+                        //MOSTRAR ALERTA SI EL PROFESIONAL NO ATIENDE EN ESE HORARIO
+
+                        //Funcion Dividir Hora en Hora y Minutos
+                        function convertir_seg_business(parametro) {
+                          Hor = Number(parametro.slice(0, 2))
+                          Min = Number(parametro.slice(3, 5))
+                          return Number(Hor, Min)
+
+                        }
+
+                        //Funcion Convertir Hora a Segundos
+                        function convertir_seg(ParamHora, ParamMin) {
+                          segundos_inicio = ParamHora * 3600 + ParamMin * 60
+                          return segundos_inicio
+                        }
+
+                        //Hora Marcada
+                        HoraMarcada = convertir_seg(hora, minutos)
+
+                        if (info.jsEvent.srcElement.className || info.jsEvent.target.className) {
+                          $('#nonbusiness').modal()
+                        }
+
+                        else {
+                          $('#ProfTurno').html('Nuevo Turno para ' + nombreProfesional);
+                          $('#Desde').html('<input type="time" name="" id="DesdeTur" value=' + HourStart + '>')
+                          $('#HoraTurno').html('<input type="date" name="" id="DiaTur" value="' + Day + '">')
+                          var final = HourStart.split(':'); // split it at the colons
+                          // minutes are worth 60 seconds. Hours are worth 60 minutes.
+                          var segstart = (+final[0]) * 60 * 60 + (+final[1]) * 60;
+                          var time = Number(segstart) + Number(duracion)
+                          var hours = Math.floor(time / 3600);
+                          var minutes = Math.floor((time % 3600) / 60);
+                          var seconds = time % 6
+                          if (hours < 10) {
+                            hours = '0' + hours
+                          }
+                          //Anteponiendo un 0 a los minutos si son menos de 10 
+                          minutes = minutes < 10 ? '0' + minutes : minutes;
+                          //Anteponiendo un 0 a los segundos si son menos de 10 
+                          seconds = seconds < 10 ? '0' + seconds : seconds;
+                          result = hours + ":" + minutes + ":" + seconds;
+                          result = result.split(':')
+                          horafinal = result[0] + ':' + result[1]
+                          $('#Hasta').html('<input type="time" name="" id="HastaTur" value=' + horafinal + '>')
+
+                          $("#modalCrearTurno").modal()
+                          $("#listapaciente").prop("onclick", null).off("click");
+                          $("#listapaciente").click(function () {
+                            $("#modalCrearTurno").modal('hide')//oculto el modal
+                            $("#modalLista").modal()
+                            cargarPacientes();
+                          })
+                          $('#EspecialidadProf').change(function () {
+                            $('#acobrar').html('Total: $0.00')
+
+                            Especialidad = ($('#EspecialidadProf')[0].value)
+
+                            listaid = [] //lista de id de las prestaciones
+                            PracEsp.forEach(element => {
+                              if (element.Id == Especialidad) {
+                                rowPrestacion = element.Practica.map((item) => '<tr><td id="nombre' + item.Id_Practica + '">' + item.NombrePractica + '</td><td w-50><input type="text" value ="0" class="form-control form-control-sm w-30" id="input' + item.Id_Practica + '"  disabled ></td><td><input type="checkbox" id=' + item.Id_Practica + ' autocomplete="off" required="required"></td></tr>')
+                                element.Practica.map((item) => listaid.push(item.Id_Practica))
+                                $('#tablaPrest').html(rowPrestacion)
+                              }
+
+                            });
+
+                            ////////////////////////////////////////////////SUMA => Veremos que sale 
+
+                            //Cambio en el input por medio del id
+                            
+                              
+                              valor = []
+                              listaid.forEach(element => {
+                                $('#' + element).prop("onclick", null).off("click");
+                                $('#' + element).click(function () {
+                                $('#input' + element).attr('disabled', !this.checked) & ($('#input' + element).val('0'))  //Si el ckeck esta tildado, habilita, sino manda 0 al input
+                              });
+
+                              $('#input' + element).change(function () {
+                                Sum = Number(0)
+                                listaid.forEach(element => {
+                                Sum += parseFloat($('#input' + element)[0].value)
+                                $('#acobrar').html('Total:$'+Sum)
+                                })
+                              })
+                            })
+                          })
+
+                          //ENVIO DE VARIABLES A APP.PY PARA COMITEAR EL TURNO EN LA BASE DE DATOS
+                          $("#ConfTur").prop("onclick", null).off("click"); // (new line) clean on click events
+                          $("#ConfTur").click(function () {
+                          
+                            enviaIdPacPlan = $("#MutPac").val()
+                            enviaDia = $("#DiaTur").val()
+                            enviaDesde = $("#DesdeTur").val()
+                            enviaHasta = $("#HastaTur").val()
+                            enviaIdEsp = $("#EspecialidadProf").val()
+                            if (enviaIdPacPlan == null) {
+                              alert('Seleccione un paciente')}
+                            if (enviaIdEsp == null){
+                              alert('Seleccione una especialidad')
+                            }else{
+                              guardar=$.ajax({
+                                  url: 'probando',
+                                  type: 'post',
+                                  dataType: 'json',
+                                  contentType: 'application/json',
+                                  data: JSON.stringify([{
+                                    'DiaTur': enviaDia,
+                                    'IdPacPlan': enviaIdPacPlan,
+                                    'HorTur': enviaDesde,
+                                    'HorFtur': enviaHasta,
+                                    'IdEsp': enviaIdEsp,
+                                    'IdProf': idProfesional
+                                      }]),
+                                  success: function (data) {
+                                    if (data.Mensaje == 'Correcto') {
+                                      $("#modalCrearTurno").modal('toggle')
+                                      $("#confirmacionrecarga").html('Su Turno ha sido guardado correctamente ')
+                                      $("#mensajedealerta").modal()
+                                      limpiar()
+                                      recarga()
+                                   }
+                                }
+                              })
+                            }
+                          });
+                          ///Funcion Limpiar Modal
+                          function limpiar() {
+                            $("#NomPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#NDoc").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#DirPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#TelPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#FecPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#EdaPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            $("#Nacionalidad").html(NacP)
+                            $("#RegPac").attr({ "placeholder": '', "value": '', "disabled": true })
+                            opciones=""
+                            $('#MutPac').html(opciones)
+                            $('#acobrar').html('Total: $0.00')
+                            $('input[type="text"]').val('');
+                          }
+                          /// Limpio el modal al Cancelar o Cerrar => X 
+                          $("#cerrarconfirmacion").prop("onclick", null).off("click");
+                          $('#cerrarconfirmacion').click(function () {
+                            limpiar()
+                          });
+                          $("#cerrarmodalcrear").prop("onclick", null).off("click");
+                          $('#cerrarmodalcrear').click(function () {
+                            limpiar()
+                          });
+                          ;
+                        }
+                      },
+
+                      ////CLICK SOBRE UN TURNO YA DADO//////////////////////////////
+
+                      eventClick: function (info, calEvent, jsEvent, view, events, element) {
+                       
+                        if(info.event.backgroundColor=='#c9db267e'){
+                          estadoturno='0'
+                          $("#EstadoTurno").html('Turno Reservado')
+                          $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='1'>Confirmar</option><option value='2'>Cancelar</option><option value='3'>En Espera</option><option value='4'>Atendido</option></select>")
+                        }
+                        if (info.event.backgroundColor == '#25d873ab') {
+                          estadoturno = '1'
+                          $("#EstadoTurno").html('Turno Confirmado')
+                          $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Reservado</option><option value='2'>Cancelar</option><option value='3'>En Espera</option><option value='4'>Atendido</option></select>")
+                        }
+                        if (info.event.backgroundColor == '#225ad3') {
+                          estadoturno = '3'
+                          $("#EstadoTurno").html('Paciente en Espera')
+                          $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Reservado</option><option value='1'>Confirmar</option><option value='2'>Cancelar</option><option value='4'>Atendido</option></select>")
+                        }
+                        if (info.event.backgroundColor == '#1ca1a6d3') {
+                          estadoturno = '4'
+                          $("#EstadoTurno").html('Paciente Atendido')
+                          $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Reservado</option><option value='1'>Confirmar</option><option value='2'>Cancelar</option><option value='3'>En Espera</option></select>")
+                        }
+
+                        DPac.forEach(element => { 
+                          if (element.Nombre === info.event.title) {
+                            Telefono = element.Telefono;
+                            Domicilio = element.Domicilio;
+                            ObSocial=info.event._def.extendedProps.ObraSocial
+                          }
+                        });
+
+                        console.log(info.event)
+                        console.log(ObSocial)
+                        //Corto la respuesta de info.event.start para obtener dia y hora de inicio
+                        var estrin = info.event.start.toString()
+                        var res = estrin.split(" ");
+                        DiaInicio = '';
+                        MesInicio = '';
+
+                        //Cambio de idioma los dias  BUSCAR UNA FORMA MENOS ORTODOXA PARA HACERLO
+                        if (res[0] == 'Mon') {
+                          DiaInicio = 'Lunes';
+                        }
+                        if (res[0] == 'Tue') {
+                          DiaInicio = 'Martes';
+                        }
+                        if (res[0] == 'Wed') {
+                          DiaInicio = 'Miercoles';
+                        }
+                        if (res[0] == 'Thu') {
+                          DiaInicio = 'Jueves';
+                        }
+                        if (res[0] == 'Fri') {
+                          DiaInicio = 'Viernes';
+                        }
+                        if (res[0] == 'Sat') {
+                          DiaInicio = 'Sabado';
+                        }
+                        //Cambio de idioma Mes
+                        if (res[1] == 'Jan') {
+                          MesInicio = 'Enero';
+                        }
+                        if (res[1] == 'Feb') {
+                          MesInicio = 'Febrero';
+                        }
+                        if (res[1] == 'Mar') {
+                          MesInicio = 'Marzo';
+                        }
+                        if (res[1] == 'Apr') {
+                          MesInicio = 'Abril';
+                        }
+                        if (res[1] == 'May') {
+                          MesInicio = 'Mayo';
+                        }
+                        if (res[1] == 'Jun') {
+                          MesInicio = 'Junio';
+                        }
+                        if (res[1] == 'Sat') {
+                          MesInicio = 'Sabado';
+                        }
+                        if (res[1] == 'Jul') {
+                          MesInicio = 'Julio';
+                        }
+                        if (res[1] == 'Aug') {
+                          MesInicio = 'Agosto';
+                        }
+                        if (res[1] == 'Sep') {
+                          MesInicio = 'Septiembre';
+                        }
+                        if (res[1] == 'Nov') {
+                          MesInicio = 'Noviembre';
+                        }
+                        if (res[1] == 'Oct') {
+                          MesInicio = 'Octubre';
+                        }
+                        if (res[1] == 'Dec') {
+                          MesInicio = 'Diciembre';
+                        }
+                        //<!--Escribo el Modal Indormacion -->
+                        $('#tituloEvento').html('Paciente ' + info.event.title + '<br>' + 'Telefono: ' + Telefono + '<br>' + 'Domiclio: ' + Domicilio + '<br> <br><div class="btn btn-primary"> Historia Clinica </div>');
+                        $('#practicaEvento').html('<h4>Practica: </h4>' + info.event._def.extendedProps.practica);
+                        $('#horaEvento').html('<h4>Dia: </h4>' + DiaInicio + ' ' + res[2] + ' de ' + MesInicio + ' de ' + res[3] + '<br>' + ' <h4>Hora: </h4> ' + res[4]);
+                        $('#ObraSocialTurnos').html('<h4>Obra Social:</h4>'+'<br>'+'<h5>'+ObSocial+ '</h5>');
+
+                        //<!-- Si es un dia no disponible, le agrego el boton desbloquear y oculdo el boton eliminar -->
+                        if (info.event.title == 'Dia No Disponible'){
+                          $('#desbloquear').html('<button class="btn btn-success" id="desbloqueardia">Desbloquear Dia</button>');
+                          $('#desbloquear').show()
+                          $('#eliminarturno').hide()
+                        }else{
+                          $('#desbloquear').hide()
+                          $('#eliminarturno').show()
+                        }
+                        //<!-- Abro el Modal Informacion del Paciente -->
+                        $("#modalinformacion").modal();
+                          // <!--! Modifica Estado Turno  -->
+                          $("#modificarturno").prop("onclick", null).off("click"); // (new line) clean on click events
+                          $("#modificarturno").click(function () {
+                            $("#modalinformacion").modal('toggle')
+                            $("#modalmodificart").modal()
+                            $("#confirmamodificacion").prop("onclick", null).off("click"); // (new line) clean on click events
+                            $("#confirmamodificacion").click(function(){
+                              nuevoestado=$("#NuevoEstado").val()
+                              $.ajax({
+                                url: 'CambioEstado',
+                                type: 'post',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                data: JSON.stringify([{
+                                  'id_event': info.event.id,
+                                  'estado':nuevoestado,
+                                  'IdProf': idProfesional
+                                }]),
+                                success: function (data) {
+                                  if (data.Mensaje == 'Correcto') {                                 
+                                    $("#modalmodificart").modal('toggle')
+                                    $("#confirmacionrecarga").html(' Cambio de Estado Correcto ')
+                                    $("#mensajedealerta").modal()
+                                    recarga()
+                                  }
+                                }
+                              })
+                            })
+                          })
+                        //<!-- Click en desbloquear dia -->
+                        $("#desbloqueardia").prop("onclick", null).off("click"); // (new line) clean on click events
+                        $("#desbloqueardia").click(function(){
+                          $("#modalinformacion").modal('hide')
+                          $("#labeldesbloqueo").html('<h5> Seguro desea desbloquear el dia ' + DiaInicio + ' ' + res[2] + ' de ' + MesInicio + ' de ' + res[3] +'<br> de '+nombreProfesional+'</h5>')
+                          $("#confirmadesbloqueo").modal()
+                          $("#confirmaciondesbloqueo").prop("onclick", null).off("click"); // (new line) clean on click events
+                          $("#confirmaciondesbloqueo").click(function(){
+                          $("#confirmaciondesbloqueo").prop('disabled', true)
+                            $.ajax({
+                              url: 'eliminar',
+                              type: 'post',
+                              dataType: 'json',
+                              contentType: 'application/json',
+                              data: JSON.stringify([{
+                                'id_event': info.event.id,
+                                'IdProf': idProfesional
+
+                              }]),
+                              success: function (data) {
+                                if (data.Mensaje == 'Correcto') {
+                                  
+                                  $("#confirmadesbloqueo").modal('toggle')
+                                  $("#confirmacionrecarga").html(' Desbloqueo correcto del rango seleccionado ')
+                                  $("#mensajedealerta").modal()
+                                  recarga()
+                                }
+                              }
+                            })
+                          })
+                        })
+                        //<!-- Click en Eliminar Turno -->
+                        $("#eliminarturno").prop("onclick", null).off("click"); // (new line) clean on click events
+                        $("#eliminarturno").click(function () {
+                          $("#modalinformacion").modal('toggle');
+                          $("#labeleliminar").html('<h5> Seguro desea eliminar el turno del ' + DiaInicio + ' ' + res[2] + ' de ' + MesInicio + ' de ' + res[3] +'<br> de '+profesional+'</h5> <br> Paciente ' + info.event.title + '<br>' + 'Telefono: ' + Telefono + '<br>' + 'Domiclio: ' + Domicilio )
+                          $("#confirmaeliminaturno").modal()
+                          $("#confirmaciondeeliminar").prop("onclick", null).off("click");
+                          $("#confirmaciondeeliminar").click(function(){
+                            $("#confirmaciondeeliminar").prop('disabled', true)
+                            $.ajax({
+                              url: 'eliminar',
+                              type: 'post',
+                              dataType: 'json',
+                              contentType: 'application/json',
+                              data: JSON.stringify([{
+                                'id_event': info.event.id,
+                              }]),
+                              success: function (data) {
+                                if (data.Mensaje == 'Correcto') {
+                                  $("#confirmaeliminaturno").modal('toggle')
+                                  $("#confirmacionrecarga").html('Su Turno ha sido eliminado correctamente ')
+                                  $("#mensajedealerta").modal()
+                                  recarga()
+                                }
+                              }
+                            })
+                          })
+                          $("#cancelEliminar").prop("onclick", null).off("click");
+                          $("#cancelEliminar").click(function () {
+                            $("#modaleliminar").modal('toggle');
+                            $("#modalinformacion").modal('show');
+                          });
+                        });          
+                      },
+                    });
+                    calendar.render();
+            }
+            else{
+              $("#calendar").html('<div class="col text-center m-auto"><div class="display-4 text-center m-auto" style="font-size: 1.5rem;"><b>Profesional seleccionado sin horario de atención asignado<b/></div></div>')
+              }
+              //Bloquear un dia determinado 
+              $("#bq-dia").prop("onclick", null).off("click");
+              $("#bq-dia").click(function () {
+                $("#bloqueodia").modal();
+                $("#confirm-bloqueo").prop("onclick", null).off("click");
+                $("#confirm-bloqueo").click(function () {
+                  DBlock = $("#seleccionedia").val()
+                  selhoradesde = $("#seleccionhoradesde").val()
+                  selhorahasta = $("#seleccionhorahasta").val()
+                  $("#bloqueodia").modal('hide')
+                  $("#labelbloqueo").html('<h5> Seguro desea bloquear el dia ' + DBlock + '<br> de ' + nombreProfesional + '</h5>')
+                  $("#confirmarbloqueo").modal()
+                  $("#confirmacion").prop("onclick", null).off("click");
+                  $("#confirmacion").click(function () {
+                    $.ajax({
+                      url: 'bloqueardia',
+                      type: 'post',
+                      dataType: 'json',
+                      contentType: 'application/json',
+                      data: JSON.stringify([{
+                        'diaBloqueado': DBlock,
+                        'IdProf': idProfesional,
+                        'bloqueodesde': selhoradesde,
+                        'bloqueohasta': selhorahasta,
+                      }]),
+                      success: function (data) {
+                        if (data.Mensaje == 'Correcto') {
+                          $("#confirmarbloqueo").modal('toggle')
+                          $("#confirmacionrecarga").html('Bloqueo de rango seleccionado correctamente ')
+                          $("#mensajedealerta").modal()
+                          recarga()
+                        }
+                      }
+                    });
+                  })
+                })
+              })
+            }}})
+          })                // ! Fin de la Creacion, y uso de fullcalendar
+</script>
+
+
+<!-- Modal de Alerta -->
+
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" >
+  <div class="mensajecolor modal-dialog modal-sm " role="document">
+    <div class="modal-content bg-success">
+      <div class="modal-body text-center">
+        <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+        <h3 id="confirmacionrecarga" style="color: white;"></h3>
+        <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Informativo-->
+<div class="modal fade" id="modalinformacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog modal-dialog-scrollable-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEvento"> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="#TelefonoPaciente"> </p>
+        <p id="#DomicilioPaciente"> </p>
+        <p id="practicaEvento"> </p>
+        <p id="horaEvento"> </p>
+        <p id="ObraSocialTurnos"> </p>
+      </div>
+      <div class="modal-footer">
+        <div id="desbloquear"></div>
+        <button type="submit" class="btn btn-secondary d-none" id="eliminarturno" value="idevent">Eliminar</button>
+        <button type="button" class="btn btn-primary" id="modificarturno">Modificar Estado</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal eliminar turno-->
+<div class="modal fade" id="confirmaeliminaturno" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar Turno Dia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div id="labeleliminar"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmaciondeeliminar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear Turno-->
+<div class="modal fade " id="modalCrearTurno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header justify-content-between">
+        <div class="col-9">
+          <h5 class="modal-title" id="ProfTurno"></h5>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="actualizar">
+          <span aria-hidden="true" id="cerrarmodalcrear">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="row d-none">
+            <!--Paciente-->
+            <h5>Paciente</h5>
+          </div>
+          <div class="row">
+            <!--Tipo Dni--- Numero DNI---->
+            <div class="col">
+              <label for="TDni">Tipo Dni</label>
+              <select name="TDni" id="TDni" class="form-control" required="required" disabled>
+                {% for tipo in tdni %}
+                <option class="form-control w-auto" value="{{tipo.0}}">{{tipo.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col">
+              <label for="NDoc">N° de Documento</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="btn btn-info form-control mr-0" id="listapaciente"><i class="fa fa-search"
+                      aria-hidden="true"></i></span>
+                </div>
+                <input type="text" id="NDoc" class="form-control w-auto ml-0 mb-3" name="dni" required 
+                  disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!--Nombre Direccion Telefono Sexo(Biologico)-->
+            <div class="col-3">
+              <!--Nombre-->
+              <label for="NomPac">Nombre :</label>
+              <input type="text" class="form-control" id="NomPac">
+              <!--<div id="NomPac"></div>-->
+            </div>
+            <div class="col-3">
+              <!--Direccion-->
+              <label for="DirPac">Direccion :</label>
+              <input type="text" class="form-control" id="DirPac">
+            </div>
+            <div class="col-2">
+              <!--Telefono-->
+              <label for="TelPac">Telefono :</label>
+              <input type="text" class="form-control" id="TelPac">
+            </div>
+            <div class="col-3">
+              <!--Fecha de Nacimiento-->
+              <label for="FecPac">Fecha de Nacimiento :</label>
+              <input type="date" class="form-control" id="FecPac">
+            </div>
+            <div class="col-1">
+              <!--Edad-->
+              <label for="EdaPac">Edad :</label>
+              <input type="text" class="form-control" id="EdaPac">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="NacionPac">Nacionalidad :</label>
+              <select name="" id="NacionPac" class="form-control">
+                <option id="Nacionalidad"> </option> <!-- Ver Como mando la Nacionalidad -->
+              </select>
+            </div>
+            <div class="col">
+              <!--EstadoCivil-->
+              <label for="ECPac">Estado Civil</label>
+              <input type="text" class="form-control" id="ECPac">
+            </div>
+            <div class="col">
+              <!--Afiliado-->
+              <label for="AfiPac">Afiliado N°</label>
+              <input type="text" class="form-control" id="AfiPac">
+            </div>
+            <div class="col">
+              <!--Religion-->
+              <label for="RegPac"> Religion</label>
+              <input type="text" class="form-control" id="RegPac">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <!--Tipo de Consulta-- Nacionalidad-- Mutual-- Coseguro $-->
+            <div class="col">
+              <label for="EspecialidadProf">Especialidad :</label>
+              <select name="" id="EspecialidadProf" class="form-control" placeholder="Seleccione una Especialidad" autofocus required>
+                <option value=""  disabled selected>Seleccione su especialidad</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="MutPac">Obra Social :   (0 = Plan Activo  // 1 = Plan Inactivo) </label>
+              <select name="" id="MutPac" class="form-control" required="required">
+                <div id="OptOS">
+
+                </div>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-7">
+              <!--Estudio-->
+              <table class="table-xs w-100" id="tablaPractica">
+
+                <thead>
+                  <input type="text" class="form-control form-control-sm w-50  mt-2" id="inputPractica"
+                    placeholder="Buscar Practica">
+                  <tr>
+                    <th>Practica</th>
+                    <th>Precio</th>
+                    <th>Select</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaPrest">
+
+                </tbody>
+              </table>
+            </div>
+            <div class="col-5">
+              <!--Horario-->
+              <h5>Hora</h5>
+              <div class="col">
+                <div class="row">
+                  <div class="col">
+                    <label for="Desde">Desde</label>
+                    <div id="Desde"></div>
+                  </div>
+                  <div class="col">
+                    <label for="Hasta">Hasta</label>
+                    <div id="Hasta"></div>
+                  </div>
+                  <div class="col">
+                    <h5>Dia</h5>
+                    <div id="HoraTurno"></div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <label for="" id="acobrar"></label>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              id="cerrarconfirmacion">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="ConfTur">Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Confirmacion -->
+  <div class="modal fade" id="modalconfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pacienteEvento"> </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="actualizar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="medicoEvento"> </p>
+          <p id="horaEvento"> </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarconfirmacion">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="confirmaturno">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Turno Aceptado -->
+  <div class="modal fade " id="turnoaceptado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" id="mensaje" role=" document">
+      <div class="modal-body">
+        <h1>Muchas Gracias Por Elegirnos</h1>
+        <h5>Se enviara un recordatorio del turno a su numero de telefono via Whatsapp</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarconfirmacion">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Turno Ocupado -->
+<div class="modal fade " id="turnodenegado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-body bg-success">
+      <h1>El turno se encuentra ocupado</h1>
+      <h5>Seleccione otro por favor</h5>
+    </div>
+    <div class="modal-footer bg-success">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarconfirmacion">Cerrar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal Modificar -->
+<div class="modal fade" id="modalmodificart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloEvento"> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <h3 id="EstadoTurno"></h3>
+          <label for="ModificaEstado">Seleccione lo que desea hacer con el turno</label>
+          <div id="ModificaEstado"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmamodificacion" >Modificar Estado</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Listado de Pacientes -->
+<div class="modal fade" id="modalLista" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg w-100" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccione el Paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-scrollable">
+        <div class="row mt-2 ml-1">
+          <div class="col-10">
+            <input class="form-control w-100 mb-2" type="text" name="BuscarPaciente" id="myInput"
+              placeholder="Buscar Paciente">
+          </div>
+          <div class="col-2">
+            <a class="nav-link" href="agregarPacienteCalendario" role="button" data-toggle="modal"
+              data-target="#agregarPacienteCalendario"><i class="fa fa-user-plus" aria-hidden="true">Agregar Paciente</i></a>
+          </div>
+        </div>
+        <table class="table-xs table-striped w-100" id="myTable" cellspacing="0">
+          <thead class="thead-dark">
+            <th>Nombre</th>
+            <th>Dni</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Obra Social</th>
+
+            <th></th>
+          </thead>
+          <tbody id="tablaPaciente">
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MODAL AGREGAR PACIENTE -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="modal fade " id="agregarPacienteCalendario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header justify-content-between">
+            <h4 class="modal-title" style="font-size: 1.5rem;font-family: 'Ubuntu', sans-serif;font-style: normal;">
+              Agregar Paciente</h4>
+          </div>
+          <div class="modal-body">
+            <form action='' method="POST">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="apellidoPaciente"> Apellido  </label>
+                  <input type="text" class="form-control" name="apellidoPaciente" id="apellidoPaciente"
+                    placeholder="Apellido" required="required">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="nombrePaciente"> Nombre/s </label>
+                  <input type="text" class="form-control" name="nombrePaciente" id="nombrePaciente"
+                    placeholder="Nombre Paciente" required="required" value="Nombre">
+                </div>
+              </div>
+              <hr>
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="sexoPaciente "> Sexo </label>
+                  <select id="sexoPaciente" name="sexoPaciente" class="form-control" required="required">
+
+                    <option value="1"> Femenino </option>
+                    <option value="0"> Masculino </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="tipoDocPaciente"> Tipo Documento </label>
+                  <select id="tipoDocPaciente" name="tipoDocPaciente" class="form-control" required="required">
+                    {% for tipoDocProfesional in tiposDocProfesional %}
+                    <option value="{{tipoDocProfesional.0}}"> {{tipoDocProfesional.1}} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="numeroDocPaciente"> Número </label>
+                  <input type="text" class="form-control" name="numeroDocPaciente" id="numeroDocPaciente"
+                    placeholder="N° de Documento" maxlength="19" required="required">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="fechaNacPaciente"> Fecha de Nacimiento </label>
+                  <input type="date" class="form-control" name="fechaNacPaciente" id="fechaNacPaciente">
+                </div>
+              </div>
+              <hr>
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="paisPaciente"> Pais </label>
+                  <select id="paisPaciente" name="paisPaciente" class="form-control">
+                    <option value="">Argentina</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="provinciaPaciente"> Provincia </label>
+                  <select id="provinciaPaciente" name="provinciaPaciente" class="form-control">
+                    <option value="">Córdoba</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="localidadPaciente"> Localidad </label>
+                  <select id="localidadPaciente" name="localidadPaciente" class="form-control">
+                    <option value="2687">Río Cuarto</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="domicilioPaciente"> Domicilio </label>
+                  <input type="text" class="form-control" name="domicilioPaciente" id="domicilioPaciente"
+                    placeholder="Domicilio" required="required">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="nacionalidadPaciente"> Nacionalidad </label>
+                  <select id="nacionalidadPaciente" name="nacionalidadPaciente" class="form-control"
+                    required="required">
+                    {% for nacionalidadProfesional in nacionalidadProfesional %}
+                    <option value="{{nacionalidadProfesional.0}}"> {{nacionalidadProfesional.1}} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Teléfono </label>
+                  <input type="tel" name="telefonoPaciente" placeholder="N° de teléfono" class="form-control"
+                    maxlength="10" required="required" id="telefonoPaciente">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label for="grupoSangPaciente"> Grupo sanguíneo </label>
+                  <select id="grupoSangPaciente" name="grupoSangPaciente" class="form-control" required>
+                    {% for tipoGSPaciente in tiposGSPaciente %}
+                    <option value="{{tipoGSPaciente}}"> {{tipoGSPaciente}} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="obraSocialPaciente"> Obra Social </label>
+                  <select id="obraSocialPaciente" name="obraSocialPaciente" class="form-control" required>
+                    <option value="">Elija O.Social</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="planObSoPaciente"> Plan Obra Social </label>
+                  <select id="planObSoPaciente" name="planObSoPaciente" class="form-control" required>
+                    <option value="">Elija Plan</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="numAfiliadoPaciente"> N Afiliado </label>
+                  <input type="text" class="form-control" name="numAfiliadoPaciente" id="numAfiliadoPaciente"
+                    placeholder="Numero de afiliado" required="required">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="fechaObSoPaciente"> Fecha Inicio en OS </label>
+                  <input type="date" class="form-control" name="fechaObSoPaciente" id="fechaObSoPaciente">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="observacionPaciente"> Observaciones </label>
+                  <textarea class="form-control" id="observacionPaciente" name="observacionPaciente" maxlength="89"
+                    rows="3"></textarea>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="religionPaciente"> Religion </label>
+                  <select id="religionPaciente" name="religionPaciente" class="form-control">
+                    {% for religionPaciente in listaReligiones %}
+                    <option value="{{religionPaciente.0}}"> {{religionPaciente.1}} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                  onclick="return confirm('¿Estás seguro que deseas cargar este paciente?')" id="guardarPacCalendario"> Guardar
+                </button>
+                <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Horario no laborable -->
+<div class="modal fade" id="nonbusiness" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seleccione un horario laborable</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          No es posible guardar un turno en un horario no laborable.
+          Seleccione un horario en el que el/la Profesional atienda
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Bloquear un dia -->
+
+<div class="modal fade" id="bloqueodia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bloquear día</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="row">
+          <h4 style="font-size: 1rem;color: red;">
+            Recuerde que, si existen turnos otorgados el lapso seleccionado, debera eliminarlos o modificarlos
+          </h4>
+        </div>
+        <div class="row text-center">
+          <label for="seleccionedia" class="m-0">Seleccione el dia que desea bloquear</label>
+        </div>
+        <div class="row text-center mt-2">
+          <input class="form-control-md m-0" type="date" name="diabloqueado" id="seleccionedia" required="required">
+        </div>
+        <div class="row text-center">
+          <label for="" class="m-0">Seleccione desde que hora que desea bloquear</label>
+        </div>
+        <div class="row text-center mt-2">
+          <label for="seleccionhoradesde">Desde</label><input class="form-control-sm" type="time" name="horadesdebloquear" id="seleccionhoradesde" required="required">
+          <label for="seleccionhorahasta">Hasta</label><input class="form-control-sm" type="time" name="horahastabloquear" id="seleccionhorahasta" required="required">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirm-bloqueo">Bloquear</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar bloqueo de dia-->
+<div class="modal fade" id="confirmarbloqueo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seguro que desea bloquear el dia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div id="labelbloqueo"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmacion">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar desbloqueo de dia-->
+<div class="modal fade" id="confirmadesbloqueo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Desbloquear Dia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div id="labeldesbloqueo"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmaciondesbloqueo">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar modificacion del dia-->
+<div class="modal fade" id="ConfModEstado" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Alerta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <h4>¿Seguro desea modificar el estado del turno?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="ConfirmaMod">Modificar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+  $(document).ready(function () {
+    $(".jm-loadingpage").fadeOut("slow");;
+  });
+</script>
+
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    // Use above variables to manipulate the DOM
+
+  });
+</script>
+
+
+<script>
+  //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tbody tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  $(document).ready(function () {
+    $("#inputPractica").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#tablaPractica tbody tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+<script>
+  $("#guardarPacCalendario").prop("onclick", null).off("click");
+  $("#guardarPacCalendario").click(function(){
+    apellidoPaciente=$("#apellidoPaciente").val()
+    nombrePaciente=$("#nombrePaciente").val()
+    sexoPaciente=$("#sexoPaciente").val()
+    tipoDocPaciente=$("#tipoDocPaciente").val()
+    numeroDocPaciente=$("#numeroDocPaciente").val()
+    fechaNacPaciente=$("#fechaNacPaciente").val()
+    paisPaciente=$("#paisPaciente").val()
+    provinciaPaciente=$("#provinciaPaciente").val()
+    localidadPaciente=$("#localidadPaciente").val()
+    domicilioPaciente=$("#domicilioPaciente").val()
+    nacionalidadPaciente=$("#nacionalidadPaciente").val()
+    telefonoPaciente=$("#telefonoPaciente").val()
+    grupoSangPaciente=$("#grupoSangPaciente").val()
+    obraSocialPaciente=$("#obraSocialPaciente").val()
+    planObSoPaciente=$("#planObSoPaciente").val()
+    numAfiliadoPaciente = $("#numAfiliadoPaciente").val()
+    fechaObSoPaciente = $("#fechaObSoPaciente").val()
+    observacionPaciente = $("#observacionPaciente").val()
+    religionPaciente= $("#religionPaciente").val()
+    $.ajax({
+      url: 'agregarPacienteCalendario',
+      type: 'post',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify([{
+        'apellidoPaciente': apellidoPaciente,
+        'nombrePaciente': nombrePaciente,
+        'sexoPaciente': sexoPaciente,
+        'tipoDocPaciente': tipoDocPaciente,
+        'numeroDocPaciente': numeroDocPaciente,
+        'fechaNacPaciente': fechaNacPaciente,
+        'paisPaciente': paisPaciente,
+        'provinciaPaciente': provinciaPaciente,
+        'localidadPaciente':localidadPaciente,
+        'domicilioPaciente': domicilioPaciente,
+        'nacionalidadPaciente': nacionalidadPaciente,
+        'telefonoPaciente': telefonoPaciente,
+        'grupoSangPaciente': grupoSangPaciente,
+        'obraSocialPaciente': obraSocialPaciente,
+        'planObSoPaciente': planObSoPaciente,
+        'numAfiliadoPaciente': numAfiliadoPaciente,
+        'fechaObSoPaciente': fechaObSoPaciente,
+        'observacionPaciente': observacionPaciente,
+        'religionPaciente': religionPaciente
+      }]),
+      success: function (data) {
+        if (data.Mensaje == 'Correcto') {
+          DPac=data.Data;
+          console.log(DPac)
+          Pacientes = DPac.map((item) => '<tr class="h-auto"><td>' + item.Nombre + '</td><td>' + item.Dni + '<td>' + item.FNac + '</td><td>' + item.ObraSocial[0].NomOSoc + '</td><td><button type="submit" class="btn btn-primary" id="" onclick="cargar(' + item.IdPaciente + ')">Seleccionar</button></td></tr>')        
+          
+            $('#tablaPaciente').html(Pacientes)
+          ;
+          
+          $("#agregarPacienteCalendario").modal('hide')
+          $("#modalLista").modal('hide')
+          $("#modalCrearTurno").modal('show')
+
+        }
+      }
+    });
+  })
+  
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ 
+{% endblock %}

@@ -1,0 +1,291 @@
+{% extends 'layout.html' %} {% block title %} Obras Sociales {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==3%}
+<div class="jm-loadingpage"></div>
+<div class="container  m-auto w-100">
+    <div class="row ml-1 justify-content-between">
+        <div class="col">
+            <h2>Obras Sociales</h2>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 justify-content-end">
+            <div class="btn btn-info" id="CargarPrestador">Nuevo Prestador</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row ml-1 justify-content-between">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 ">
+            <div class="row">
+                <h4>Obras Existentes</h4>
+            </div>
+            <div class="row">
+                <select id="obraSocialPaciente" name="obraSocialProfesional" class="form-control">
+                    <option value="">Elija O.Social</option>
+                </select>
+            </div>
+        </div>
+        <div class="colcol-xs-12 col-sm-12 col-md-12 col-lg-4 ml-4">
+            <div class="row">
+                <h4>Planes Asociados</h4>
+            </div>
+            <div class="row">
+                
+            <ul id="planObSoPaciente" name="planObSoProfesional">
+                <li value=""></li>
+            </ul>
+                
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row w-100">
+        <div class="col">
+            <button class="btn btn-info" id="btnNuevoPlan">Nuevo Plan</button>
+            <button class="btn btn-danger d-none" id="cancelarbtnNuevoPlan">Cancelar</button>
+        </div>
+        <div class="col">
+            <ul style="list-style: none;" id="li_planes">
+            </ul>
+            <button class="btn btn-success" id="btnmas" disabled><i class="fa fa-plus-circle" aria-hidden="true" ></i></button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info" id="CargarNvoPlan" >Cargar Plan/es</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalNuevoPrestador" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Prestador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                  <label for="NombrePrestador">Nombre Prestador</label>
+                  <input type="text" name="prestador" id="NombrePrestador" class="form-control inputform" placeholder="Nombre Prestador" aria-describedby="helpId" required>
+                    <label for="ContactoPrestador">Contacto</label>
+                    <input type="text" name="prestador" id="ContactoPrestador" class="form-control inputform" placeholder="Nombre del Contacto en el Prestador"
+                        aria-describedby="helpId" >
+                </div>
+                <div class="row form-group">
+                    <label for="TelefonoPrestador">Telefono Prestador</label>
+                    <input type="phone" name="prestador" id="TelefonoPrestador" maxlength="10" class="form-control inputform" placeholder="Codigo sin 0 + Numero sin 15 -Sin espacios- "
+                        aria-describedby="helpId" required>
+                    <label for="EmailPrestador">Email Prestador</label>
+                    <input type="email" name="prestador" id="EmailPrestador" class="form-control inputform" placeholder="email@prestador.com"
+                        aria-describedby="helpId" required>
+                </div>
+                <div class="row form-group">
+                    <label for="DireccionPrestador">Direccion Prestador</label>
+                    <input type="text" name="prestador" id="DireccionPrestador" class="form-control inputform" placeholder="Direccion y Numero"
+                        aria-describedby="helpId">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="guardarPrestador" disabled>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Esta seguro de cargar un nuevo prestador?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="ConfGuardar">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal de Alerta -->
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div id="coloralerta" class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 id="mensajerecarga" style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $(".jm-loadingpage").fadeOut("slow");;
+  });
+</script>
+
+<script type="text/javascript">
+    $('.inputform').change(function () {
+            suma = 0
+            $('.inputform').each(function () {
+                valor = (($(this).val()))
+                if (valor == '') {
+                    suma--
+                } else {
+                    suma++
+                }
+            })
+            console.log(suma)
+            if (suma >= 5) {
+                $("#guardarPrestador").removeAttr('disabled')
+            } if (suma < 5) {
+                $("#guardarPrestador").prop('disabled', 'disabled')
+            }
+        })
+
+
+
+
+
+    $("#CargarPrestador").click(function(){
+        $("#modalNuevoPrestador").modal()
+    })
+
+    $("#btnNuevoPlan").click(function () {
+        $("#obraSocialPaciente").prop('disabled', true)
+        $("#cancelarbtnNuevoPlan").removeClass('d-none')
+        $("#btnNuevoPlan").addClass('d-none')
+        $("#li_planes").html('<li><input type="text" class="form-control input_planes" placeholder="Nombre del Plan" id="inputPlan"></li >')
+            $("#inputPlan,#btnmas").removeAttr('disabled')
+        })
+
+        
+    $("#btnmas").click(function () {
+        $("#btnmenos").removeClass('d-none')
+        $("#li_planes").append('<li class="d-flex d-inline"><input type="text" class="form-control input_planes" placeholder="Nombre del Plan" id="inputPlan"><button class="btn btn-danger" id="btnmenos" onclick="borrar(jQuery(this))"> - </button></li >')
+        })
+        
+
+
+    
+    function borrar(boton) {
+            jQuery(boton).parent().remove();
+        }
+
+    $("#cancelarbtnNuevoPlan").click(function () {
+        $("#obraSocialPaciente").prop('disabled', false)
+        $("#btnNuevoPlan").removeClass('d-none')
+        $("#cancelarbtnNuevoPlan").addClass('d-none')
+    })
+
+
+
+    listaPlanes = []
+     $("#CargarNvoPlan").click(function () {
+            $('.input_planes').each(function (){
+                obraSocialPaciente=$("#obraSocialPaciente").val()
+                listaPlanes = []
+                $('.input_planes').each(function (){
+                    listaPlanes.push(($(this).val()))
+                })
+            })
+                $.ajax({
+                    url: 'NuevosPlanes',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify([{
+                        'obraSocialPaciente': obraSocialPaciente,
+                        'listaPlanes': listaPlanes,
+                    }]),
+                    success: function (data) {
+                        if (data.Mensaje == 'Correcto') {
+                            $("#confirmacionrecarga").html('Informacion cargada correctamente ')
+                            $("#mensajedealerta").modal()
+                            setTimeout(location.reload(true), 2000)
+                    }
+                }
+            })
+            console.log(listaPlanes)
+     })
+
+//VACIOS EN PLANES
+
+
+    
+
+
+
+//NUEVO PRESTADOR
+
+$("#guardarPrestador").click(function(){
+    $("#modalNuevoPrestador").modal('toggle')
+    $("#modalGuardar").modal()
+    $("#ConfGuardar").click(function () {
+        NombrePrestador=$("#NombrePrestador").val()
+        ContactoPrestador = $("#ContactoPrestador").val()
+        TelefonoPrestador = $("#TelefonoPrestador").val()
+        EmailPrestador = $("#EmailPrestador").val()
+        DireccionPrestador = $("#DireccionPrestador").val()
+
+        $.ajax({
+            url: 'NuevaObra',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'NombrePrestador':NombrePrestador,
+                'ContactoPrestador' : ContactoPrestador,
+                'TelefonoPrestador' : TelefonoPrestador,
+                'EmailPrestador' : EmailPrestador,
+                'DireccionPrestador' : DireccionPrestador,
+            }]),
+            success: function (data) {
+                if (data.Mensaje == 'Correcto') {
+                    $("#confirmacionrecarga").html('Obra Social cargada correctamente ')
+                    $("#mensajedealerta").modal()
+                    setTimeout(location.reload(true), 2000)
+                } if (data.Mensaje == 'Incorrecto') {
+                    $("#modalGuardar").modal('toggle')
+                    $("#coloralerta").removeClass('bg-success').addClass('bg-warning')
+                    $("#confirmacionrecarga").html('La Obra Social Ya se encuentra Cargada ')
+                    $("#mensajedealerta").removeAttr("data-backdrop")
+                    $("#mensajerecarga").html('Presione fuera del mensaje para continuar')
+                    $("#mensajedealerta").modal()
+                    
+                }
+            }
+        })
+    })
+})
+
+
+
+    
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+{%endif%}
+{%endblock%}

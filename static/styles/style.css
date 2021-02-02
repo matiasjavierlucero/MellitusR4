@@ -1,0 +1,236 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-lg {
+    max-width: 80%;
+}
+
+
+
+#leftMargin {
+    
+    margin-left: -20%;
+}
+
+.modal-md {
+    max-width: 55%;
+    max-height: 50%;
+}
+
+.modal-md2 {
+    max-width: 45%;
+    max-height: 80%;
+}
+
+/* div#container-Fluid {
+    display: none;
+    }  */
+
+div#loading {
+    top: 700 px;
+    margin: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 50%;
+    height: 55%;
+    background: url(/static/images/ajax-loader.gif) no-repeat;
+    cursor: wait;
+    }
+
+
+.dropdown,.btn.btn-secondary.dropdown-toggle{
+    background-color: transparent;
+    color:black;
+    border:none;
+}
+
+#titulologo{
+    color:rgb(4, 129, 231);
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+
+#logotext{
+    color:rgb(4, 129, 231);
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 5rem;
+}
+
+#gestionProf,#pacientesRegistrados{
+     font-size: 2rem;
+     font-family: 'Ubuntu', sans-serif;
+     font-style: normal;
+ }
+
+ label{
+    font-family: 'Roboto', sans-serif;
+     font-weight: bold;
+ }
+
+ table tr th {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .sorting {
+    background-color: #D4D4D4;
+  }
+  
+  .asc:after {
+    content: ' ↑';
+  }
+  
+  .desc:after {
+    content: " ↓";
+  }
+
+  .nav-link{
+      font-size: 1rem;
+  }
+
+  .nav-link:hover{
+      background-color: rgba(164, 188, 233, 0.219);
+  }
+  .nav-link span:hover{
+background-color: transparent;
+  }
+
+  .navbar-brand , .nav-link, .my-form, .login-form
+    {
+    font-family: Roboto, sans-serif;
+    }
+#containterpacientes{
+    margin: 0;
+    padding: 0;
+}
+#container-Fluid{
+    margin: 0;
+    padding: 0;
+}
+
+.titulosTurno{
+    font-size: 1.5rem;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 100;
+}
+
+@media (max-width: 600px) {
+    .ocultarcol {
+      display: none;
+    }
+    .imgfondo{
+        display: none;
+    }
+    .body{
+        background: rgb(227, 236, 248);
+    }
+    .titulosTurno{
+        font-size: 1.2rem;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: 100;
+    }
+    .jm-loadingpage {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 599px;
+	z-index: 999999999;
+    background: url(../images/cargando.gif) center no-repeat rgba(255, 255, 255, 0.445);
+    background-size: 100%;
+    }
+  }
+
+ /*Loading page*/
+.jm-loadingpage {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 999999999;
+    background: url(../images/cargando.gif) center no-repeat rgba(255, 255, 255, 0.445);
+    background-size: 50%;
+}
+/*Loading page*/ 
+
+#color0,#turres{
+    background-color: #c9db267e;
+      border-bottom: 1 solid black;
+      color:black
+}
+
+#color1,#turcon{
+    background-color: #25d873ab;
+      border-bottom: 1 solid black;
+      color:black
+}
+
+#color2,#turcan{
+    background-color: #9c0c0c94;
+    border-bottom: 1 solid black;
+    color:black
+}
+
+#color3,#turesp{
+    background-color: #225ad3;
+      border-bottom: 1 solid black;
+      color:black
+}
+#color4,#turate{
+    background-color: #1ca1a6d3;
+      border-bottom: 1 solid black;
+      color:black
+}
+
+/*
+Modal Paciente Externo
+*/
+
+.fullscreen-modal .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .fullscreen-modal .modal-dialog {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .fullscreen-modal .modal-dialog {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .fullscreen-modal .modal-dialog {
+     width: 1170px;
+  }
+}
+
+.dropdown-menu {
+  width:250px;
+}

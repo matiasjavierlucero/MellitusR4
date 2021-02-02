@@ -1,0 +1,22 @@
+[
+    {
+        "Id": 15,
+        "Especialidad": "Endocrinologia",
+        "Practica": [
+            {
+                "Id_Practica": 1,
+                "NombrePractica": "Consulta Medica"
+            }
+        ]
+    },
+    {
+        "Id": 20,
+        "Especialidad": "Ginecologia",
+        "Practica": [
+            {
+                "Id_Practica": 1,
+                "NombrePractica": "Consulta Medica"
+            }
+        ]
+    }
+]

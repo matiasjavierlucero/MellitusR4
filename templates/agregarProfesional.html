@@ -1,0 +1,137 @@
+{% extends 'layout.html' %} {% block title %} Agregar profesional {% endblock %}
+
+{% block body %}
+<div class="row">
+
+  <div class="col-md-12">
+    {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+<h1> Nuevo profesional </h1>
+
+<form action = '/agregarProfesional' method="POST">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="nombreProfesional"> Nombre </label>
+      <input type="text" class="form-control" name="nombreProfesional" id="nombreProfesional" placeholder="Nombre" required="required">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="apellidoProfesional"> Apellido </label>
+      <input type="text" class="form-control" name="apellidoProfesional" id="apellidoProfesional" placeholder="Apellido" required="required">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="sexoProfesional "> Sexo </label>
+      <select id="sexoProfesional" name="sexoProfesional" class="form-control" required="required">
+        <option selected> Elija uno </option>
+        <option value="1"> Femenino </option>
+        <option value="0"> Masculino </option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="tipoDocProfesional"> Tipo Documento </label>
+      <select id="tipoDocProfesional" name="tipoDocProfesional" class="form-control" required="required">
+        {% for tipoDocProfesional in tiposDocProfesional %}
+          <option value="{{tipoDocProfesional.0}}"> {{tipoDocProfesional.1}}  </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="numeroDocProfesional"> Número </label>
+      <input type="text" class="form-control" name="numeroDocProfesional" id="numeroDocProfesional" placeholder="N° de Documento" required="required">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="fechaNacProfesional"> Fecha de Nacimiento </label>        
+      <input type="date" class="form-control" name="fechaNacProfesional"  id="fechaNacProfesional">      
+    </div>
+  </div>  
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="paisProfesional"> Pais </label>
+      <select id="paisPaciente" name="paisProfesional" class="form-control">
+        <option value="">Elija pais</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="provinciaProfesional"> Provincia </label>
+      <select id="provinciaPaciente" name="provinciaProfesional" class="form-control">
+        <option value="">Elija provincia</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="localidadProfesional"> Localidad </label>
+      <select id="localidadPaciente" name="localidadProfesional" class="form-control">
+        <option value="">Elija localidad</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="domicilioProfesional"> Domicilio </label>
+      <input type="text" class="form-control" name="domicilioProfesional" id="domicilioProfesional" placeholder="Domicilio" required="required">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="nacionalidadProfesional"> Nacionalidad </label>
+      <select id="nacionalidadProfesional" name="nacionalidadProfesional" class="form-control" required="required">
+        {% for nacionalidadProfesional in nacionalidadProfesional %}
+          <option value="{{nacionalidadProfesional.0}}"> {{nacionalidadProfesional.1}}  </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label>Teléfono </label>
+      <input type="tel" name="telefonoProfesional" placeholder="N° de teléfono" class="form-control" maxlength="10" required="required">
+    </div>
+    <div class="form-md-4">
+      <label>E-Mail </label>
+      <input type="email" name="emailProfesional" placeholder="emailprofesional@gmail.com" class="form-control" maxlength="45" required="required">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <label for="usuarioProfesional"> Nombre de usuario </label>
+      <input type="text" class="form-control" name="usuarioProfesional" id="usuarioProfesional" placeholder="Nombre de usuario" required="required">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="passwordProfesional"> Password </label>
+      <input type="password" class="form-control" name="passwordProfesional" id="passwordProfesional" placeholder="password" required="required">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="password2Profesional"> Confirmar Password </label>
+      <input type="password" class="form-control" name="password2Profesional" id="password2Profesional" placeholder="password" required="required">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="especialidadProfesional"> Selecciona la/s especialidad/es</label>
+      <select id="especialidadProfesional" name="especialidadProfesional" placeholder="Selecciona especialidad/es" class="form-control" multiple>
+        {% for especialidadProfesional in especialidadProfesional %}
+        <option value="{{especialidadProfesional.0}}"> {{especialidadProfesional.1}}  </option>
+      {% endfor %}
+      </select> 
+    </div>
+    <div class="form-group col-md-2">
+      <label for="numeroMNProfesional">N° Matricula Nacional </label>
+      <input type="text" class="form-control" name="numeroMNProfesional" id="numeroMNProfesional" placeholder="N° M.N " required="required">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="numeroMPProfesional">N° Matricula Provincial </label>
+      <input type="text" class="form-control" name="numeroMPProfesional" id="numeroMPProfesional" placeholder="N° M.P " required="required">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="observacionProfesional"> Observaciones  </label>
+    <textarea class="form-control" id="observacionProfesional" name="observacionProfesional" maxlength="99" rows="3"></textarea>
+    </div> 
+  </div>
+  <button type="submit" class="btn btn-primary"> Guardar </button>
+</form>
+
+{% endblock %}

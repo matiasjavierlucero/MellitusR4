@@ -1,0 +1,45 @@
+{% extends 'layout.html' %} {% block body %} {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+<div class="row">
+    <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <form action='/RegistrarPaciente' method="POST">
+            <label for="Apellido">Apellido</label>
+            <input type="text" name="Apellido" class="form-control w-50 m-auto text-center " required>
+            <label for="Nombre">Nombre</label>
+            <input type="text" name="Nombre" class="form-control w-50 m-auto text-center " required>
+            <label for="dni">DNI</label>
+            <input type="text" name="dni" minlength="7" maxlength="8" class="form-control w-50 m-auto text-center" required>
+            <label for="fecnac">Fecha de Nacimiento</label>
+            <input type="date" name="fecnac" class="form-control w-50 m-auto text-center" required>
+            <label for="sexo">Sexo</label>
+            <select name="sexo" name="sexo" class="form-control w-50 m-auto text-center" required>
+                <option value="0" class="text-center">Masculino</option>
+                <option value="1" class="text-center">Femenino</option>
+            </select>
+            <label for="obraSocialPaciente"> Obra Social </label>
+            <select id="obraSocialPaciente" name="obraSocialPaciente" class="form-control w-50 m-auto text-center" required>
+                <option value="">Elija O.Social</option>
+            </select>    
+            <label for="planObSoPaciente"> Plan de tu Obra Social (si no está elegí "base") </label>
+            <select  id="planObSoPaciente" name="planObSoPaciente" class="form-control w-50 m-auto text-center" required>
+                <option value="">Elija Plan</option>
+            </select>      
+            <label for="telefono">Telefono - (Whatsapp)</label>
+            <input type="text" name="telefono" minlength="7" maxlength="10" placeholder="Código sin 0 + Número sin 15 (SIN GUIÓN)" class="form-control w-50 m-auto text-center" required>
+            <br><br>
+            <a class="btn btn-danger" href="loginPacientes">CANCELAR</a>
+            <button type="submit" class="btn btn-success">Registrarse</button>
+
+        </form>
+    </div>
+    <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+
+</div>
+{% endblock %}

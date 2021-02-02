@@ -1,0 +1,116 @@
+{% extends 'layout.html' %} {% block title %} Gestionar Dias No Laborales {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==3 %}
+{% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+</div>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+<div class="jm-loadingpage"></div>
+<div class="containter m-auto text-center">
+    <div class="row d-flex justify-content-between">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 text-center">
+            <div class="card-body">
+            <form action="/CargarFeriado" method="post">
+                <div class="form-group text-center" >
+                    <h5>Nuevo dia No Laboral</h5>
+                </div>
+                <div class="form-group text-center " >
+                    <input type="date" name="DiaFeriado" placeholder="Dia" class="form-control w-100" >
+                </div>
+                <div class="form-group text-center">
+                    <input type="text" name="MotivoFeriado" placeholder="Motivo (Ej: Dia de la Bandera)" class="form-control w-100"  >
+                </div>
+                <div class="form-group text-center">
+                    <a href="/index.html"><button class="btn btn-cancel">Cancelar</button></a>
+                    <button type="submit" class="btn btn-success" id="guardarFeriado">Guardar</button>
+                </div>
+            </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-center mt-3">
+
+            
+            <table class="table-sm table-striped table-xs w-100">
+                <thead>
+                    <h5> Listado de Días No Laborales</h5>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Motivo</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fer in feriados%}
+                    <tr>
+                    <td>{{fer.2.strftime('%d-%m-%Y')}}</td>
+                    <td>{{fer.1}}</td>
+                    <td>
+                        <a href="BorrarFeriado{{fer.0}}"><button class="btn btn-danger"> Eliminar</button></a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            
+        </div>
+
+
+    </div>
+</div>
+
+
+
+</div>
+
+
+
+<!-- Modal de Alerta -->
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".jm-loadingpage").fadeOut("slow");;
+    });
+</script>
+
+
+
+
+
+
+<script>
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique un turno de un paciente sin necesidad de acceder al turnero
+    $(document).ready(function () {
+        $("#FiltrarSecre").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaSecre tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+{% endif %}
+{% endblock %}

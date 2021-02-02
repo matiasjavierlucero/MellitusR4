@@ -1,0 +1,190 @@
+{% extends 'layout.html' %} {% block title %} Perfil {% endblock %} {% block body %}
+
+
+<div class="col-md-5">
+    {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    {% endfor %} {% endif %}{% endwith %}
+</div>
+{% if session['usuario'] %}
+
+
+{% if session['idTusu'] == 1 %}
+
+<h3>Lo sentimos, sitio bajo construccion</h3>
+
+{% endif %}
+
+{% if session['idTusu'] == 2 %}
+
+<form action = '/cambiarPassword' method="POST">
+    <div class="form-row">
+        
+        {% for datoProf in datosProf %}
+        <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="row justify-content-center">
+                <h3> MI PERFIL </h3>
+            </div>
+            <br>
+            <hr>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" readonly class="form-control-plaintext" id="nombreProfesional" value="{{datoProf.1}}">
+                </div>
+                <div class="col">
+                    <label for="dniProfesional"> DNI </label>
+                    <input type="text" readonly class="form-control-plaintext" id="dniProfesional" value="{{datoProf.3}}">
+                </div>
+            </div>
+            <hr>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <label for="fechaNacProfesional">Fecha Nacimiento </label>
+                    <input type="text" readonly class="form-control-plaintext" id="fechaNacProfesional"
+                        value="{{datoProf.4.strftime('%d-%m-%Y')}}">
+                </div>
+                <div class="col">
+                    <label for="domicilioProfesional"> Domicilio </label>
+                    <input type="text" readonly class="form-control-plaintext" id="domicilioProfesional" value="{{datoProf.5}}">
+                </div>
+            </div>
+            <hr>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <label for="telefonoProfesional"> Telefono </label>
+                    <input type="text" readonly class="form-control-plaintext" id="telefonoProfesional" value="{{datoProf.8}}">
+                </div>
+                <div class="col">
+                    <label for="emailProfesional"> Email </label>
+                    <input type="text" readonly class="form-control-plaintext" id="emailProfesional" value="{{datoProf.9}}">
+                </div>
+                <div class="col">
+                    <label for="usuarioProfesional"> Usuario </label>
+                    <input type="text" readonly class="form-control-plaintext" id="usuarioProfesional" value="{{datoProf.20}}">
+                </div>
+            </div>
+            <hr>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <label for="passViejaProfesional"> Contraseña actual </label>
+                    <input type="password" readonly class="form-control-plaintext" id="passProfesional" value="*********">
+                </div>
+                <div class="col">
+                    <label for="passNuevaProfesional"> Contraseña nueva </label>
+                    <input type="password" name='passNueva' placeholder="password 8-16 caracteres" class="form-control-plaintext"
+                        id="passNuevaProfesional" minlength=8 maxlength=16 required="required">
+                </div>
+                <div class="col">
+                    <label for="confirmPassNuevaProfesional"> Confirmar contraseña nueva </label>
+                    <input type="password" name='passNueva2' placeholder="password 8-16 caracteres" class="form-control-plaintext"
+                        id="confirmPassNuevaProfesional" minlength=8 maxlength=16 required="required">
+                </div>
+            </div>
+            <hr>
+            <div class="row justify-content-between">
+                <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar la nueva contraseña. Presione cancel si no realizó ningún cambio')">
+                    Confirmar 
+                </button>
+                <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+
+
+        </div>
+        <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+    
+        {% endfor %}
+    </div>
+</form>
+
+{% endif %}
+
+{% if session['idTusu'] == 3 %}
+<form action = '/cambiarPassword' method="POST">
+<div class="form-row">
+    
+    {% for datoSecre in datosSecre %}
+    <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 justify-content-center">
+        <div class="row justify-content-center">
+            <h3> MI PERFIL </h3>
+        </div>
+        <br>
+        <hr>
+        <div class="row justify-content-between">
+            <div class="col">
+                <label for="nombreSecretaria">Nombre</label>
+                <input type="text" readonly class="form-control-plaintext" id="nombreSecretaria" value="{{datoSecre.1}}">
+            </div>
+            <div class="col">
+                <label for="dniSecretaria"> DNI </label>
+                <input type="text" readonly class="form-control-plaintext" id="dniSecretaria" value="{{datoSecre.3}}">
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-between">
+            <div class="col">
+                <label for="fechaNacSecretaria">Fecha Nacimiento </label>
+                <input type="text" readonly class="form-control-plaintext" id="fechaNacSecretaria"
+                    value="{{datoSecre.4.strftime('%d-%m-%Y')}}">
+            </div>
+            <div class="col">
+                <label for="domicilioSecretaria"> Domicilio </label>
+                <input type="text" readonly class="form-control-plaintext" id="domicilioSecretaria" value="{{datoSecre.5}}">
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-between">
+            <div class="col">
+                <label for="telefonoSecretaria"> Telefono </label>
+                <input type="text" readonly class="form-control-plaintext" id="telefonoSecretaria" value="{{datoSecre.8}}">
+            </div>
+            <div class="col">
+                <label for="usuarioSecretaria"> Usuario </label>
+                <input type="text" readonly class="form-control-plaintext" id="usuarioSecretaria" value="{{datoSecre.16}}">
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-between">
+            <div class="col">
+                <label for="passViejaSecretaria"> Contraseña actual </label>
+                <input type="password" readonly class="form-control-plaintext" id="passSecretaria" value="*********">
+            </div>
+            <div class="col">
+                <label for="passNuevaSecretaria"> Contraseña nueva </label>
+                <input type="password" name='passNueva' placeholder="password 8-16 caracteres" class="form-control-plaintext" id="passNuevaSecretaria" minlength=8 maxlength=16 required="required">
+            </div>
+            <div class="col">
+                <label for="confirmPassNuevaSecretaria"> Confirmar contraseña nueva </label>
+                <input type="password" name='passNueva2' placeholder="password 8-16 caracteres" class="form-control-plaintext" id="confirmPassNuevaSecretaria" minlength=8 maxlength=16 required="required">
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-between">
+            <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar la nueva contraseña. Presione cancel si no realizó ningún cambio')">
+                Confirmar 
+            </button>
+            <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">
+                Cancelar
+            </button>
+        </div>
+    </div>
+    <div class="col-xs-none col-sm-none col-md-none col-lg-3"></div>
+    
+
+    {% endfor %}
+</div>
+</form>
+{% endif %}
+
+
+
+{% endif %} {% endblock %}

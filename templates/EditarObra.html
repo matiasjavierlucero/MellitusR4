@@ -1,0 +1,208 @@
+{% extends 'layout.html' %} {% block title %} Gestionar Obra Social {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==3 %}
+
+<div class="container w-100">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="row ml-1 justify-content-between">
+                <h5 class="modal-title"> Prestador</h5>
+                <button class="btn btn-info" id="btnEditar"> Editar </button>
+                <button class="btn btn-success d-none" id="btnGuardar"> Guardar  </button>
+            </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <label for="NombrePrestador">Nombre Prestador</label>
+                        <input type="text" name="prestador" id="NombrePrestador" class="form-control cambios" placeholder=""
+                            aria-describedby="helpId" required  disabled>
+                        <label for="ContactoPrestador">Contacto</label>
+                        <input type="text" name="prestador" id="ContactoPrestador" class="form-control cambios" placeholder=""
+                            aria-describedby="helpId" disabled>
+                    </div>
+                    <div class="row form-group">
+                        <label for="TelefonoPrestador">Telefono Prestador</label>
+                        <input type="phone" name="prestador" id="TelefonoPrestador" class="form-control cambios" placeholder=""
+                            aria-describedby="helpId" required disabled>
+                        
+                    </div>
+                    <div class="row form-group">
+                        <label for="DireccionPrestador">Direccion Prestador</label>
+                        <input type="text" name="prestador" id="DireccionPrestador" class="form-control cambios" placeholder=""
+                            aria-describedby="helpId" disabled>
+                    </div>
+                    <div class="form-group row">
+                        <label for="estadoObra">Estado</label>
+                        <select name="estadoObra" id="estadoObra" class="form-control cambios" disabled>
+                    
+                        </select>
+                    </div>
+                </div>
+                </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <h5>Listado de Planes</h5>
+            <br><br>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th class="w-auto">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for plan in planObra%}
+                    <tr>
+                        <td>{{plan.1}}</td>
+                        <td class="w-auto"><button class="btn btn-danger act{{plan.5}}" id="desactivarObra" value='{{plan.0}}' ></button></td>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Alerta -->
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    
+    $("#NombrePrestador").attr({ "placeholder": '{{datosObra.1}}', "value": '{{datosObra.1}}'})
+    $("#ContactoPrestador").attr({ "placeholder": "{{datosObra.2}}", "value": "{{datosObra.2}}" })
+    $("#TelefonoPrestador").attr({ "placeholder": "{{datosObra.3}}", "value": "{{datosObra.3}}" })
+    $("#DireccionPrestador").attr({ "placeholder": "{{datosObra.4}}", "value": "{{datosObra.4}}" })
+    if ("{{datosObra.6}}" === '0') {
+        $("#estadoObra").html('<option value="0"> Activo </option><option value="1"> Desactivo </option>')
+    } else {
+        $("#estadoObra").html('<option value="1"> Desactivo </option><option value="0"> Activo </option>')
+    }
+
+    $("#btnEditar").click(function () {
+        $(".cambios").removeAttr('disabled')
+    })
+    //CUALQUIER CAMBIO EN EL FORMULARIO DE DATOS PESONALES, ACTIVA EL BOTON GUARDAR DATOS PERSONALES
+    $(".cambios").change(function () {
+        $("#btnGuardar").removeClass("d-none").addClass("d-block");
+        $("#btnEditar").addClass("d-none")
+    });
+
+
+    //
+    $("#btnGuardar").click(function (){
+            idSec = '{{idSec}}'
+            idObra = "{{IdObra}}"
+            NomObr = $("#NombrePrestador").val()
+            ConObr = $("#ContactoPrestador").val()
+            TelObr = $("#TelefonoPrestador").val()
+            DirObr = $("#DireccionPrestador").val()
+            EstObr = $("#estadoObra").val()
+            $.ajax({
+                url: 'CambiosPrestador',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    "NomObr": NomObr,
+                    "ConObr": ConObr,
+                    "TelObr": TelObr,
+                    "DirObr": DirObr,
+                    "EstObr": EstObr,
+                    "idObra": idObra
+                }]),
+                success: function (data) {
+                    if (data.Mensaje == 'Correcto') {
+                        $("#modalCambiosPersonales").modal('toggle')
+                        $("#confirmacionrecarga").html("Se modificaron correctamente los datos del Prestador")
+                        $("#mensajedealerta").modal()
+                        setTimeout(location.reload(true), 2000)
+                    }
+                }
+            });
+        })
+
+
+//Botones Activar Desactivar
+$(".act0").removeClass("btn-succes").addClass("btn-danger").html('Desactivar').removeAttr("onclick").attr("onclick", "desactivar($(this).val())")
+$(".act1").removeClass("btn-danger").addClass("btn-success").html('Activar').removeAttr("onclick").attr("onclick", "activar($(this).val())")
+
+
+//Activar Plan
+function activar(id){
+    idPlan=id
+    idObra = "{{IdObra}}"
+    $.ajax({
+        url: 'ActivarOsPrestador',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify([{
+            'IdPlan': idPlan,
+            'IdObra': idObra,
+        }]),
+        success: function (data) {
+            if (data.Mensaje == 'Correcto') {
+                $("#confirmacionrecarga").html("Se Activo correctamente el Plan para el Prestador...")
+                $("#mensajedealerta").modal()
+                setTimeout(location.reload(true), 2000)
+            }
+        }
+    });
+}
+
+
+
+//Desactivar Plan
+function desactivar(id) {
+    idPlan = id
+    idObra = "{{IdObra}}"
+    console.log(idPlan, idObra)
+    $.ajax({
+            url: 'DesactivarOsPrestador',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'IdPlan': idPlan,
+                'IdObra': idObra,
+            }]),
+            success: function (data) {
+                if (data.Mensaje == 'Correcto') {
+                    $("#confirmacionrecarga").html("Se desactivo correctamente el Plan para el Prestador...")
+                    $("#mensajedealerta").modal()
+                    setTimeout(location.reload(true), 2000)
+                }
+            }
+        });
+        }
+
+
+
+
+
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique un turno de un paciente sin necesidad de acceder al turnero
+    $(document).ready(function () {
+        $("#FiltrarSecre").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaSecre tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+{% endif %}
+{% endblock %}

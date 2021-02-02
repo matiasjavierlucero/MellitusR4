@@ -1,0 +1,299 @@
+{% extends 'layout.html' %} {% block title %} Panel de Turnos {% endblock %} {% block body %} {% if session['idTusu'] ==1 or session['idTusu'] ==2 or session['idTusu'] ==3%}
+
+<div class="jm-loadingpage"></div>
+<!-- LISTA TURNOS MANANA -->
+<div class="container m-auto w-100">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="container w-100 d-flex">
+                    <div class="row w-100 d-flex">
+                        <div class="col d-flex justify-content-start">
+                            <a href="todoslosturnos" id="todoslosturnos" class="btn btn-primary" role="button">Todos los Turnos</a>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <div id="turnosmanana" class="btn btn-primary" role="button">Dia Siguiente - Whatsapp<i class="fa fa-whatsapp" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">----------------------------------------------------------------------------------------------------------------------------------</div>
+            <div class="row justify-content-center">
+                <h3>Listado de Turnos</h3>
+            </div>
+            <div class="col d-flex justify-content-between ">
+                <p id="turres" style="border-radius: 9%;">-Turno Reservado-</p>
+                <p id="turcon" style="color: white;border-radius: 9%;"> - Turno Confirmado -</p>
+                <p id="turesp" style="color: white;border-radius: 9%;"> - En sala de Espera -</p>
+                <p id="turate" style="color: white;border-radius: 9%;"> - Paciente Atendido -</p>
+                <p id="turcan" style="color: white;border-radius: 9%;"> - Turno Cancelado -</p>
+            </div>
+            <div class="row">
+                <input class="form-control w-100 mb-2" type="text" name="BuscarPaciente" id="FiltrarTurno" placeholder="Puede ingresar cualquier parametro para acceder al turno">
+                <table class="table-xs table-bordered w-100 m-2" id='tablaTurnosManana'>
+                    <thead>
+                        <tr class="header">
+                            <th scope="col"> Fecha </th>
+                            <th scope="col" class="ocultarcol"> Hora INICIO </th>
+                            <th scope="col" class="ocultarcol"> Hora FIN </th>
+                            <th scope="col" class="d-none"> Estado </th>
+                            <th scope="col"> Profesional </th>
+                            <th scope="col" class="d-none" class="ocultarcol"> DNI Profesional </th>
+                            <th scope="col" class="ocultarcol"> Especialidad </th>
+                            <th scope="col"> Paciente -> </th>
+                            <th scope="col" class="ocultarcol"> DNI </th>
+                            <th scope="col"> Telefono </th>
+                            <th>Cambiar Estado</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <div class="row">
+                                <div class="col-md-11">
+                                    <input type="text" name="buscaProfesional" id="buscaProfesional" onkeyup="filtrarBusqueda()" placeholder="buscar profesional" class="form-control" maxlength="255">
+                                </div>
+                            </div> -->
+
+
+                        {% for turno in listaTurnos %}
+
+
+
+
+
+                        <tr id="color{{turno.4}}">
+                            <input type="hidden" name="IdTur" value="{{turno.0}}">
+                            <td>{{turno.1.strftime('%d-%m-%Y')}}</td>
+                            <td>{{turno.2}}</td>
+                            <td class="ocultarcol">{{turno.3}}</td>
+                            <td class="ocultarcol d-none">{{turno.4}}</td>
+                            <td>{{turno.10}}</td>
+                            <td class="ocultarcol d-none">{{turno.11}}</td>
+                            <td class="ocultarcol">{{turno.21}}</td>
+                            <td>{{turno.16}}</td>
+                            <td class="ocultarcol">{{turno.17}}</td>
+                            <td>{{turno.18}}</td>
+                            <td class="text-center"><button class="btn btn-info modificarEstado" value="{{turno.4}}" id="{{turno.0}}">Cambiar Estado</td>
+                                </tr>
+                        
+                    
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+<!--TODO__ Modificar estado de turno-->
+<div class="modal fade" id="modalmodificart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloEvento">Seleccione lo que desea hacer con el turno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <h3 id="EstadoTurno"></h3>
+                    <label for="ModificaEstado"></label>
+                    <div id="ModificaEstado"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmamodificacion">Modificar Estado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Alerta -->
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Turnos mañana-->
+<div class="modal fade" id="comparaturnos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Turnos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <div class="row w-100">
+                    <div class="col m-0">
+                        <h2>Turnos Mañana</h2>
+                        <table class="table-xs m-0">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Profesional</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tdSig in TurSig %}
+                                <tr>
+                                    <td>{{tdSig.1.strftime('%d-%m')}}</td>
+                                    <td>{{tdSig.2}}</td>
+                                    <td>{{tdSig.16}}</td>
+                                    <td>{{tdSig.10}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+
+
+
+
+                    <!--ESTO LO VE SOLO LA SECERTARIA-->
+                    {% if session['idTusu'] ==1 or session['idTusu'] ==3 %}
+                    <div class="col m-0">
+                        <h2>Estado de turnos de Whatsapp</h2>
+                        <table class="table-xs m-0">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Profesional</th>
+                                    <th class="d-none">Estado</th>
+                                    <th>Hora Enviado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for wpp in wppSig %}
+                                <tr id="color{{wpp.1}}">
+                                    <td>{{wpp.7.strftime('%d-%m')}}</td>
+                                    <td>{{wpp.8}}</td>
+                                    <td>{{wpp.5}}</td>
+                                    <td>{{wpp.6}}</td>
+                                    <td class="d-none">{{wpp.1}}</td>
+                                    <td>{{wpp.2.strftime('%H:%M')}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col w-auto"><span id="color1">Enviado Correctamente</span>
+                            </div>
+                            <div class="col w-auto"><span id="color0">El telefono no existe o no posee Whatsapp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                <button type="button" class="btn btn-primary">CONFIRMAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $(".jm-loadingpage").fadeOut("slow");;
+    });
+
+    $(".modificarEstado").click(function() {
+        turno = $(this).attr("id")
+        estado = $(this).attr("value")
+        if (estado == '0') {
+            $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='1'>Confirmar</option><option value='2'>Cancelar</option></option><option value='3'>En Espera</option><option value='4'>Atendido</option></select>")
+        }
+        if (estado == '1') {
+            $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Volver a reserva</option><option value='2'>Cancelar</option></option><option value='3'>En Espera</option><option value='4'>Atendido</option></select>")
+        }
+        if (estado == '2') {
+            $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Volver a reserva</option><option value='1'>Confirmar</option></option><option value='3'>En Espera</option><option value='4'>Atendido</option></select>")
+        }
+        if (estado == '3') {
+            $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Volver a reserva</option><option value='1'>Confirmar</option><option value='2'>Cancelar</option><option value='4'>Atendido</option></select>")
+        }
+        if (estado == '4') {
+            $("#ModificaEstado").html("<select id='NuevoEstado' class='form-control' name='NuevoEstado'><option value='0'>Volver a reserva</option><option value='1'>Confirmar</option><option value='2'>Cancelar</option></option><option value='3'>En Espera</option></select>")
+        }
+
+
+
+        $("#modalmodificart").modal()
+        $("#confirmamodificacion").click(function() {
+            nuevoestado = $("#NuevoEstado").val()
+            $.ajax({
+                url: 'CambioEstado',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    'id_event': turno,
+                    'estado': nuevoestado,
+                }]),
+                success: function(data) {
+                    if (data.Mensaje == 'Correcto') {
+                        console.log(data)
+                        $("#modalmodificart").modal('toggle')
+                        $("#confirmacionrecarga").html(' Cambio de Estado Correcto ')
+                        $("#mensajedealerta").modal()
+                        setTimeout(location.reload(true), 2000)
+                    }
+                }
+            })
+        })
+    })
+
+
+    $("#turnosmanana").click(function() {
+        $("#comparaturnos").modal()
+    })
+
+
+
+
+    //TODOS LOS TURNOS
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique un turno de un paciente sin necesidad de acceder al turnero
+    $(document).ready(function() {
+        $("#FiltrarTurno").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tablaTurnosManana tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+{% endblock %}

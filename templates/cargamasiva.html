@@ -1,0 +1,291 @@
+{% extends 'layout.html' %} {% block title %} Gestionar Obra Social {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==3 %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col" style="margin-bottom: 10px;margin-top: 10px;">
+            <h4 class="text-center">Carga Masiva de Prestadores</h4>
+        </div>
+    </div>
+    <hr><br>
+    <div class="row  justify-content-between">
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <h5>Seleccione Profesional</h5>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <select class="form-control w-auto" name="profesional" required="" autofocus=""
+                            id="Profesional">
+                            <option value="1">Seleccione</option>
+                            {%for prof in listaProf %}
+                            <option value={{prof.0}}>{{prof.1}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="btn btn-danger d-none" id="cancelProf"><i class="fa fa-times"
+                                aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h5>Seleccione Prestadores</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control w-auto" data-live-search="true" id="obraseleccionada"
+                        name="obraseleccionada">
+                        {%for os in osocial %}
+                        <option value={{os.0}}>{{os.1}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="row"></div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h5>Seleccione Multiples Planes</h5>
+                </div>
+            </div>
+            <br>
+            <select class="form-control" multiple data-live-search="true" id="planesmulti">
+
+            </select>
+            <br>
+            <div class="btn btn-info" id="agregar">Agregar</div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h5>Planes Seleccionados</h5>
+                </div>
+            </div>
+            <hr>
+            <div class=" table-responsive">
+                <table class="table-sm w-100">
+                    <thead>
+                        <tr>
+                            <th>Prestador</th>
+                            <th>Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpotabla">
+
+                    </tbody>
+                </table>
+                <br>
+                <div class="btn btn-success" id="fincarga">Finalizar Carga</div>
+            </div>
+        </div>
+    </div>
+    <hr >
+    <div class="row">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col text-center">
+                <h5>Planes del Profesional</h5>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <input class="form-control w-100 mb-2" type="text" name="BuscarPaciente" id="myInput" placeholder="Filtro">
+                    <thead>
+                        <tr>
+                            <th>Obra</th>
+                            <th>Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpotablainferior">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#cuerpotablainferior tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="reporte" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Informe de Cargas</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <h5>Planes <b>Asociados</b> al Profesional</h5>
+                        <ul id="asociados" class="text-success">
+
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h5>Planes <b>No Asociados</b> al Profesional</h5>
+                        <span>(Planes que el profesional poseia asociados previamente)</span>
+                        <ul id="noAsociados" class="text-danger">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" id="cerrarreporte">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    $('.selector').selectpicker();
+    $(".filter-option-inner-inner").html("Nada Seleccionado")
+</script>
+
+
+
+
+<script>
+    $("#Profesional").change(function () {
+        $("#cancelProf").removeClass('d-none')
+        $("#Profesional").attr({ 'disabled': 'true' })
+        $("#planesmulti").html('')
+        $("#cuerpotabla").html('')
+        $("#cuerpotablainferior").html('')
+        IdProfesional = $("#Profesional").val()
+        $.ajax({
+            url: 'LlenarTablaInferior',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'IdProfesional': IdProfesional,
+            }]),
+            success: function (data) {
+                console.log(data)
+                row = (data.PlanProf).map((item) => '<tr><td value=' + item[0] + '>' + item[11] + '</td><td value=' + item[0] + '>' + item[1] + '</td></tr>');
+                $("#cuerpotablainferior").html(row);
+            }
+        })
+
+    })
+
+    $("#cancelProf").prop("onclick", null).off("click");
+    $("#cancelProf").click(function () {
+        $("#Profesional").removeAttr('disabled')
+        $("#cancelProf").addClass('d-none')
+    })
+
+
+
+
+    listaplanes = [];
+    $("#obraseleccionada").change(function () {
+        idObra = ($("#obraseleccionada").val())
+        nombreObra = ($('select[name="obraseleccionada"] option:selected').text())
+        $.ajax({
+            url: 'TraerPlanes',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'idObra': idObra,
+            }]),
+            success: function (data) {
+                opciones = (data.Planes).map((item) => '<option value=' + item[0] + '>' + item[1] + '</option>')
+                console.log(opciones)
+                $("#planesmulti").html(opciones);
+            }
+        })
+    })
+
+
+    $("#agregar").prop("onclick", null).off("click");
+    $("#agregar").click(function () {
+        ($("#planesmulti").val()).forEach(element => {
+            listaplanes.push(element)
+        });
+        $.ajax({
+            url: 'LlenarTabla',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'listaplanes': listaplanes,
+            }]),
+            success: function (data) {
+                fila = (data.ListaPlanes).map((item) => '<tr><td value=' + item[0][0] + '>' + item[0][2] + '</td><td value=' + item[0][0] + '>' + item[0][1] + '</td></tr>');
+                $("#cuerpotabla").html(fila);
+                (data.ListaPlanes).map((item) => idsPlanes.push(item[0][0]));
+
+            }
+        })
+    })
+
+    IdProfesional = ''
+
+    $("#fincarga").prop("onclick", null).off("click");
+    $("#fincarga").click(function () {
+        IdProfesional = $("#Profesional").val()
+        console.log('Este es el prof' + IdProfesional)
+        console.log(listaplanes)
+        $.ajax({
+            url: 'InsertPlanes',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify([{
+                'listaplanes': listaplanes,
+                'IdProfesional': IdProfesional,
+            }]),
+            success: function (data) {
+                asociados=(data.Cargados).map((item) =>'<li>'+item[0][2]+'-' + item[0][1] +'</li>')
+                $("#asociados").html(asociados)
+                noAsociados = (data.NoCargados).map((item) => '<li>' + item[0][2] + '-' + item[0][1] + '</li>')
+                $("#noAsociados").html(noAsociados)
+                $("#reporte").modal()
+                console.log(data)
+            }
+        })
+    })
+
+$("#cerrarreporte").click(function()
+{
+    location.reload()
+})
+
+
+</script>
+
+{% endif %}
+{% endblock %}

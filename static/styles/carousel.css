@@ -1,0 +1,48 @@
+#imgservice{
+    cursor: pointer;
+    filter: opacity(.90);
+}
+
+#imgservice:hover{
+    	-webkit-transform:scale(1.3);transform:scale(1.1);
+     transition:all .5s ease-in-out;
+    background-color: rgba(39, 186, 223, 0.493);
+    filter: opacity(1);
+}
+
+#titulologo{
+    color:rgb(4, 129, 231);
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size:1.6rem;
+}
+
+.nav-item a,#btn-turno {
+     font-size: 1.3rem;
+     margin-left: 1px;
+
+}
+.nav-item a{
+    background-color:transparent;
+    color: rgba(0, 0, 0, 0.99);
+}
+
+.nav-item a:hover{
+    color:rgba(255, 255, 255, 0.99);
+    background-color: rgba(57, 135, 214, 0.637);
+    border-radius: 5%;
+     
+}
+
+@media (max-width: 600px) {
+    .ocultarcol {
+      display: none;
+    }
+  }
+
+@media (min-width: 600px) {
+    .ocultarmob {
+      display: none;
+    }
+  }

@@ -1,0 +1,77 @@
+{% extends 'layout.html' %} {% block title %} Panel de Turnos {% endblock %}
+{% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==2 or session['idTusu'] ==3 %} 
+
+
+
+
+<div class="container text-center">
+    <div class="row justify-content-center mt-2 mb-1">
+    <h5>Turnos filtrados para el/la profesional {{nombreprofesional.0}}. Desde el dia {{desde}} hasta el dia {{hasta}}</h5>
+
+    </div>
+    <div class="row justify-content-between mt-2 mb-1">
+        <button class="btn btn-info" id="print" onclick="imprimir()">Imprimir</button>
+        
+    <a href="/todoslosturnos" type="button" class="btn btn-danger" id="volver">Volver</a>
+    </div>
+
+    
+    <input class="form-control w-100 mb-2" type="text" name="BuscarPaciente" id="FiltrarTurno" placeholder="Puede ingresar cualquier parametro para acceder al turno">
+    <table class="table" id="tablaturnosfiltrados">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Paciente</th>
+                <th>Profesional</th>
+                <th>Practica</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for turno in turnos%}
+            <tr>
+                <td>{{turno.1.strftime('%d-%m-%Y')}}</td>
+                <td>{{turno.2}}</td>
+                <td>{{turno.16}}</td>
+                <td>{{turno.10}}</td>
+                <td>{{turno.21}}</td>
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+
+
+<script>
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique un turno de un paciente sin necesidad de acceder al turnero
+    $(document).ready(function () {
+        $("#FiltrarTurno").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tablaturnosfiltrados tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+function imprimir(){
+$("#volver").addClass("d-none")
+$("#print").addClass("d-none")
+$("#FiltrarTurno").addClass("d-none")
+    
+print(document.getElementById("tablaturnosfiltrados"))
+
+setTimeout(function () {
+    $("#volver").removeClass("d-none")
+    $("#FiltrarTurno").removeClass("d-none")
+    $("#print").removeClass("d-none") }, 2);
+} 
+
+
+</script>
+
+
+{% endif %}
+{% endblock %}

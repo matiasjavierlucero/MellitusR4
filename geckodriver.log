@@ -1,0 +1,305 @@
+1576540423768	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileWGk11L"
+1576540424368	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1576540424369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1576540424369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1576540424369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1576540426354	Marionette	INFO	Listening on port 42603
+1576540426414	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576540453035	Marionette	INFO	Stopped listening on port 42603
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+[Parent 9135, Gecko_IOThread] WARNING: pipe error (163): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576540470787	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilemTTH3Q"
+1576540471428	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1576540471428	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1576540471428	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1576540471428	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1576540473307	Marionette	INFO	Listening on port 36631
+1576540473395	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576540519266	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilemaA29X"
+1576540519784	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1576540519784	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1576540519784	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1576540519784	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1576540521675	Marionette	INFO	Listening on port 45117
+1576540521775	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576540541123	Marionette	INFO	Stopped listening on port 45117
+1576541957599	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofiletEdgOu"
+1576541959722	Marionette	INFO	Listening on port 33305
+1576541959808	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576542086804	Marionette	INFO	Stopped listening on port 33305
+[Parent 13204, Gecko_IOThread] WARNING: pipe error (110): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 13204, Gecko_IOThread] WARNING: pipe error (96): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542130271	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilefxIwVs"
+1576542132091	Marionette	INFO	Listening on port 44749
+1576542132179	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+[Parent 13732, Gecko_IOThread] WARNING: pipe error (148): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 13732, Gecko_IOThread] WARNING: pipe error (112): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 13732, Gecko_IOThread] WARNING: pipe error (60): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542144179	Marionette	INFO	Stopped listening on port 44749
+1576542160120	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofiletAPtjT"
+1576542162271	Marionette	INFO	Listening on port 35125
+1576542162343	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576542212144	Marionette	INFO	Stopped listening on port 35125
+[Parent 14052, Gecko_IOThread] WARNING: pipe error (115): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 14052, Gecko_IOThread] WARNING: pipe error (148): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542218711	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilea1H8No"
+1576542221035	Marionette	INFO	Listening on port 34255
+1576542221124	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576542318889	Marionette	INFO	Stopped listening on port 34255
+[Parent 14488, Gecko_IOThread] WARNING: pipe error (114): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542897950	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilefP4wcn"
+1576542900075	Marionette	INFO	Listening on port 36395
+1576542900186	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576542953934	Marionette	INFO	Stopped listening on port 36395
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x370124,name=PContent::Msg_DetachBrowsingContext) Closed channel: cannot send/recv
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+[Child 15699, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 728
+[Child 15699, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 728
+[Child 15699, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 728
+[Child 15699, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 728
+[Parent 15638, Gecko_IOThread] WARNING: pipe error (116): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542958971	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilexUiZLq"
+1576542960956	Marionette	INFO	Listening on port 42077
+1576542960986	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x370124,name=PContent::Msg_DetachBrowsingContext) Closed channel: cannot send/recv
+
+[Parent 16129, Gecko_IOThread] WARNING: pipe error (118): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 16129, Gecko_IOThread] WARNING: pipe error (45): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576542982279	Marionette	INFO	Stopped listening on port 42077
+1576542995325	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6270Hf"
+1576542997234	Marionette	INFO	Listening on port 34739
+1576542997377	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+1576543216461	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6Rgqi6"
+1576543218365	Marionette	INFO	Listening on port 36091
+1576543218484	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///actors/OfflineAppsChild.jsm, line 26: TypeError: manifestURI is null
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+JavaScript warning: https://web.whatsapp.com/app.23ffa35bc714b063c767.js, line 2: unreachable code after return statement
+[Parent 17450, Gecko_IOThread] WARNING: pipe error (113): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 17450, Gecko_IOThread] WARNING: pipe error (110): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 17450, Gecko_IOThread] WARNING: pipe error (44): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576543238008	Marionette	INFO	Stopped listening on port 36091
+[Parent 17100, Gecko_IOThread] WARNING: pipe error (151): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 17100, Gecko_IOThread] WARNING: pipe error (120): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 16519, Gecko_IOThread] WARNING: pipe error (138): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 16519, Gecko_IOThread] WARNING: pipe error (119): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 16519, Gecko_IOThread] WARNING: pipe error (61): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+[Parent 16519, Gecko_IOThread] WARNING: pipe error (132): Connection reset by peer: file /build/firefox-TZTJEq/firefox-71.0+build5/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
+1576543391883	Marionette	INFO	Stopped listening on port 34739

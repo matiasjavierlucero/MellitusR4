@@ -1,0 +1,630 @@
+{% extends 'layout.html' %} {% block title %} Gestionar Profesional {% endblock %} {% block body %} {% if session['idTusu'] ==1 or session['idTusu'] ==3 %}
+<div class="jm-loadingpage"></div>
+<div class="container w-100 d-flex">
+    <div class="col d-flex justify-content-start">
+        <p style="font-size: 1.5rem;font-family: 'Ubuntu', sans-serif;font-style: normal;">Listado Profesionales</p>
+    </div>
+    <div class="col d-flex justify-content-end inline-flex">
+        <a class="btn btn-info" style="width: auto;" href="agregarProfesional" role="button" data-toggle="modal" data-target="#agregarProfesional">Agregar <img class="align-self-end" src="../static/images/profesionales_final.svg" style="width: 40px;"></a>
+    </div>
+</div>
+{% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+</div>
+</div>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+
+
+<!-- LISTA PROFESIONALES -->
+<div class="row w-100">
+    <div class="col-md-12 m-2">
+        <table class="table-md table-striped w-100" id='tablaProfesionales'>
+            <thead>
+                <tr class="header">
+                    <th scope="col" class="w-auto">Nombre </th>
+                    <th scope="col" class="w-auto ocultarcol">DNI </th>
+                    <th scope="col" class="w-auto ocultarcol">Fecha Nac. </th>
+                    <th scope="col" class="w-auto ocultarcol  d-none">Domicilio </th>
+                    <th scope="col" class="w-auto ocultarcol">Localidad </th>
+                    <th scope="col" class="w-auto ocultarcol d-none">Sexo </th>
+                    <th scope="col" class="w-auto">Telefono </th>
+                    <th scope="col" class="w-auto">Email </th>
+                    <th scope="col" class="w-auto ocultarcol d-none">Nacionalidad </th>
+                    <th scope="col" class="w-auto ocultarcol">Usuario </th>
+                    <th scope="col" class="w-auto ocultarcol d-none">Observaciones </th>
+                    <th scope="col" class="w-auto ocultarcol">Estado </th>
+                    <th scope="col" class="w-auto ocultarcol">Numero M.N. </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" name="buscaProfesional" id="buscaProfesional" placeholder="buscar profesional" class="form-control" maxlength="255">
+                    </div>
+                </div>
+
+
+                {% for profesional in listaProfesionales %}
+                <div class="hidden" style="display: none;">
+                    {{profEspec.clear()}} {% if profesional.0 not in profesionales %} {{profesionales.append(profesional.0)}}
+
+                </div>
+
+
+                <form action="/modificarProfesional/{{profesional.0}}">
+
+                    <tr>
+                        <input type="hidden" name="IdPro" value="{{profesional.0}}">
+                        <td>{{profesional.1}}</td>
+                        <td class="ocultarcol">{{profesional.3}}</td>
+                        <td class="ocultarcol">{{profesional.4.strftime('%d-%m-%Y')}}</td>
+                        <td class="ocultarcol  d-none">{{profesional.5}}</td>
+                        {% for localidad in listaLocalidades %} {% if localidad.0 == profesional.6 %}
+                        <td class="ocultarcol">{{localidad.1}}</td>
+                        {% endif %} {% endfor %} {% if profesional.7 == 0 %}
+                        <td class="ocultarcol  d-none">Masculino</td>
+                        {% else %}
+                        <td class="ocultarcol  d-none">Femenino</td>
+                        {% endif %}
+                        <td>{{profesional.8}}</td>
+                        <td>{{profesional.9}}</td>
+                        {% for nacionalidad in nacionalidadProfesional %} {% if nacionalidad.0 == profesional.10 %}
+                        <td class="ocultarcol  d-none">{{nacionalidad.1}}</td>
+                        {% endif %} {% endfor %} {% for usuario in listaUsuarios %} {% if usuario.0 == profesional.11 %}
+                        <td class="ocultarcol">{{usuario.1}}</td>
+                        {% endif %} {% endfor %}
+                        <td class="ocultarcol  d-none">{{profesional.12}}</td>
+                        {% if profesional.13 == 0 %}
+                        <td class="ocultarcol">Activo</td>
+                        {% else %}
+                        <td class="ocultarcol">Eliminado</td>
+                        {% endif %}
+
+
+                        <td class="ocultarcol">{{profesional.14}}</td>
+                        <td>
+                            <a class="btn btn-primary" role="button" type="submit" href="/modificarProfesional/{{profesional.0}}" data-toggle="modal" data-target="#modificarProfesional{{profesional.0}}"> VER </a>
+
+                        </td>
+                    </tr>
+                </form>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% for profesional in listaProfesionales %}
+<!-- MODAL MODIFICAR PROFESIONAL -->
+<div class="row">
+    <div class="col-md-12">
+        <div id="modificarProfesional{{profesional.0}}" class="modal hide fade modalaocultar" role="dialog">
+            <div class="hidden" style="display: none;">
+                {% if profesional.0 not in profEspec %} {{profEspec.append (profesional.0)}} {% endif %}
+            </div>
+
+            <div class="modal-dialog modal-xl ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="modal-title">Modificar Profesional: {{profesional.1}}</h4>
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active mr-4"><a href="#infoGralPro{{profesional.0}}" aria-controls="infoGralPro{{profesional.0}}" role="tab" data-toggle="tab">INFORMACION GENERAL</a>
+                            </li>
+                            <li role="presentation" class="mr-4"><a href="#especPro{{profesional.0}}" aria-controls="especPro{{profesional.0}}" role="tab" data-toggle="tab">ESPECIALIDADES</a>
+                            </li>
+                            <li role="presentation" class="mr-4"><a href="#turnosPro{{profesional.0}}" aria-controls="turnosPro{{profesional.0}}" role="tab" data-toggle="tab">TURNOS</a>
+                            </li>
+                            <li role="presentation" class="mr-4"><a href="#mutualesPro{{profesional.0}}" aria-controls="mutualesPro{{profesional.0}}" role="tab" data-toggle="tab">MUTUALES</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="infoGralPro{{profesional.0}}">
+                                <form action="/modificarProfesional/{{profesional.0}}" method="POST">
+                                    <input type="hidden" name="IdPro" value="{{profesional.0}}">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <label for="nombreCompProfesional"> Apellido y Nombre </label>
+                                            <input type="text" class="form-control" name="nombreCompProfesional" id="nombreCompProfesional" value="{{profesional.1}}" required="required">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="tipoDocProfesional"> Tipo Documento </label>
+                                            <select id="tipoDocProfesional" name="tipoDocProfesional" class="form-control" required="required">
+                                                                            {% for tipoDocProfesional in tiposDocProfesional %}
+                                                                                <option value="{{tipoDocProfesional.0}}" {% if profesional.2 == tipoDocProfesional.0 %} {{'selected'}} {% else %} {{''}} {% endif %}> {{tipoDocProfesional.1}}  </option>
+                                                                            {% endfor %}
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="numeroDocProfesional"> Número </label>
+                                            <input type="text" class="form-control" name="numeroDocProfesional" id="numeroDocProfesional" value="{{profesional.3}}" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="sexoProfesional "> Sexo </label>
+                                            <select id="sexoProfesional" name="sexoProfesional" class="form-control" required="required">
+                                                                            {% if profesional.7 ==0  %}
+                                                                            <option value="0" selected > Masculino </option>
+                                                                            <option value="1" > Femenino </option>
+                                                                            {% else %}
+                                                                            <option value="1" selected > Femenino </option>
+                                                                            <option value="0"  > Masculino </option>
+                                                                            {% endif %}
+                                                                            
+                                                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label for="fechaNacProfesional"> Fecha de Nacimiento </label>
+                                            <input type="date" class="form-control" name="fechaNacProfesional" value="{{profesional.4}}" id="fechaNacProfesional">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="paisProfesional"> Pais </label>
+                                            <select id="paisProfesional" name="paisProfesional" class="form-control">
+                                                                        {% for pais in listaPaisProvLoc %}
+                                                                            {% if pais.0 == profesional.30 %}
+                                                                                
+                                                                                <option value="{{pais.0}}">{{pais.1}}</option>
+                                                                                
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="provinciaProfesional"> Provincia </label>
+                                            <select id="provinciaProfesional" name="provinciaProfesional" class="form-control">
+                                                                                {% for provincia in listaPaisProvLoc %}
+                                                                                {% if provincia.3 == profesional.28 %}
+                                                                                    
+                                                                                    <option value="{{provincia.3}}">{{provincia.4}}</option>
+                                                                                    
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="localidadProfesional"> Localidad </label>
+                                            <select id="localidadProfesional" name="localidadProfesional" class="form-control">
+                                                                                {% for localidad in listaPaisProvLoc %}
+                                                                                {% if localidad.6 == profesional.26 %}
+                                                                                    
+                                                                                    <option value="{{localidad.6}}">{{localidad.7}}</option>
+                                                                                    
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="domicilioProfesional"> Domicilio </label>
+                                            <input type="text" class="form-control" name="domicilioProfesional" id="domicilioProfesional" value="{{profesional.5}}" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="nacionalidadProfesional"> Nacionalidad </label>
+                                            <select id="nacionalidadProfesional" name="nacionalidadProfesional" value="{{profesional.0}}" class="form-control" required="required">
+                                                                            {% for nacionalidadProfesional in nacionalidadProfesional %}
+                                                                            <option value="{{nacionalidadProfesional.0}}" {% if profesional.10 == nacionalidadProfesional.0 %} {{'selected'}} {% else %} {{''}} {% endif %}> {{nacionalidadProfesional.1}}  </option>
+                                                                            {% endfor %}
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label>Teléfono </label>
+                                            <input type="tel" name="telefonoProfesional" value="{{profesional.8}}" class="form-control" maxlength="10" required="required">
+                                        </div>
+                                        <div class="form-md-6">
+                                            <label>E-Mail </label>
+                                            <input type="email" name="emailProfesional" value="{{profesional.9}}" class="form-control" maxlength="45" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="usuarioProfesional"> Nombre de usuario </label> {% for usuario in listaUsuarios %} {% if usuario.0 == profesional.11 %}
+                                            <input type="text" class="form-control" name="usuarioProfesional" id="usuarioProfesional" value="{{usuario.1}}" required="required"> {% endif %} {% endfor %}
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="actividadProfesional"> Actividad/Estado </label>
+                                            <select id="actividadProfesional" name="actividadProfesional" class="form-control" required="required">
+                                                                            {% if profesional.13 ==0  %}
+                                                                            <option value="0" selected > Activo </option>
+                                                                            <option value="1" > Eliminado </option>
+                                                                            {% else %}
+                                                                            <option value="1" selected > Eliminado </option>
+                                                                            <option value="0"  > Activo </option>
+                                                                            {% endif %}
+                                                                            
+                                                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="numeroMNProfesional">N° Matricula Nacional </label>
+                                            <input type="text" class="form-control" name="numeroMNProfesional" id="numeroMNProfesional" value="{{profesional.14}}" required="required">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="observacionProfesional"> Observaciones  </label>
+                                            <textarea class="form-control" id="observacionProfesional" name="observacionProfesional" value="{{profesional.12}}" maxlength="99" rows="3">{{profesional.12}}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                                        <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="especPro{{profesional.0}}">
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <a class="btn btn-primary clickEsp" role="button" name='idProf' href="/agregarEspecialidadPro/{{profesional.0}}" data-toggle="modal" data-target="#agregarEspecialidadPro{{profesional.0}}"> agregarEspecialidad </a>
+                                    </div>
+                                </div>
+
+                                <div class="hidden" style="display: none;">
+                                    {% for especialidad in listaProEsp %} {% if especialidad.3 == profesional.0 %} {% if especialidad.0 not in especialidades %} {{especialidades.append (especialidad.0)}} {% endif %} {% endif %} {% endfor %}
+                                </div>
+
+                                <table class="table-xs table-striped" style="max-height: 60%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Especialidad</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div class="form-row">
+                                            {% for especialidadProf in especialidades %} {% for esp in especialidadProfesional %} {% if especialidadProf == esp.0 %}
+
+                                            <tr>
+                                                <td scope="row"> {{esp.1}}
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary espXprof" role="button" href="/especialidadXProfesional/{{profesional.0}}/{{esp.0}}" data-toggle="modal" data-target="#especialidadXProfesional{{profesional.0}}{{esp.0}}">Ingresar</a>
+                                                </td>
+                                            </tr>
+
+
+                                            <div class="hidden" style="display: none;">
+                                            </div>
+                                            {% endif %} {% endfor %} {% endfor %}
+                                            <div class="hidden" style="display: none;">
+                                                {{especialidades.clear()}}
+                                            </div>
+                                        </div>
+
+                                    </tbody>
+                                </table>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                                    <button type="button" class="btn btn-danger btn-simple " data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="turnosPro{{profesional.0}}">
+                                <form action="/agregarDiaHoraAtenPro/{{profesional.0}}" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="diaAtencProfesional"> Dia y hora de atencion </label>
+                                            <select id="diaAtencProfesional" name="diaAtencProfesional" placeholder="diaAtencProfesional" class="form-control">
+                                                                        {% for diaAtencProfesional in listaDias %}
+                                                                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                                                                        {% endfor %}
+                                                                        </select>
+
+                                            <div class="form-row">
+                                                <label for="horaInicioAtencProfesional"> Hora inicio</label>
+                                                <input type="time" step='2' name="horaInicioAtencProfesional" id="horaInicioAtencProfesional" min="08:00:00" max="20:00:00">
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="horaFinAtencProfesional"> Hora fin</label>
+                                                <input type="time" name="horaFinAtencProfesional" id="horaFinAtencProfesional" step='3' min="08:00:00" max="20:00:00">
+                                            </div>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                                        <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                                        <a type="button" href="cargaDiasAtenc/{{profesional.0}}" class="btn btn-warning btn-simple" onclick="return confirm('Se dirige a otra sección para cargar MÚLTIPLES horarios para este profesional.¿Desea continuar? los cambios NO guardados se perderan')">CARGA MASIVA</a>
+                            
+                                    </div>
+                                </form>
+                                <div class="form-group col-md-2"></div>
+                                        <div class="form-group col-md-4">
+                                            <h2>DIAS y HORARIOS DE ATENCIÓN(turnos)</h2>
+                                            <table class="table table-striped" id='diaHoraTurnoProfesional'>
+                                                <thead>
+                                                    <tr class="header">
+                                                        <th scope="col">DIA</th>
+                                                        <th scope="col">HORA INICIO</th>
+                                                        <th scope="col">HORA FIN</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                                                                
+                                                    {% for diaHoraTurnoProf in listaDiaHoraTurno %}                                                                                    
+                                                        {% if diaHoraTurnoProf.1 == profesional.0 and diaHoraTurnoProf.6 == 0%} 
+                                                        <form action="/quitarDiaHoraAtenPro/{{profesional.0}}" method="POST">
+                                                            <tr>
+                                                                {% for dia in listaDias %}
+                                                                        {% if diaHoraTurnoProf.2 == dia.0 %} 
+                                                                            <td>{{dia.1}}</td>
+                                                                        {% endif %}                                                                                            
+                                                                {% endfor %}
+                                                                <td>{{diaHoraTurnoProf.3}}</td>
+                                                                <td>{{diaHoraTurnoProf.4}}</td>         
+                                                                <input type="hidden" name="idDha" value="{{diaHoraTurnoProf.0}}">         
+                                                                <td>
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Deseas eliminar este horario de atención?')"> BORRAR </button>
+                                                                </td>
+                                                            </tr>
+                                                        </form>
+                                                        {% endif %}                                                    
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="mutualesPro{{profesional.0}}">
+                                <form action="/agregarObraSoPlanPro/{{profesional.0}}" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="obraSocialProfesional"> Obra Social </label>
+                                            <select id="obraSocialPaciente" name="obraSocialProfesional" class="form-control">
+                                                                          <option value="">Elija O.Social</option>
+                                                                        </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="planObSoProfesional"> Plan Obra Social </label>
+                                            <select id="planObSoPaciente" name="planObSoProfesional" class="form-control">
+                                                                          <option value="">Elija Plan</option>
+                                                                        </select>
+                                        </div>
+                                        <div class="form-group col-md-2"></div>
+                                        <div class="form-group col-md-4">
+                                            <h2>OBRAS SOCIALES</h2>
+                                            <table class="table table-striped" id='obraSocialPlanProfesional'>
+                                                <thead>
+                                                    <tr class="header">
+                                                        <th scope="col">O.SOCIAL</th>
+                                                        <th scope="col">PLAN</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for planOS in listaPlanObSoPro %} {% if planOS.2 == profesional.0 %}
+                                                    <tr>
+                                                        <td>{{planOS.6}}</td>
+                                                        <td>{{planOS.4}}</td>
+                                                        <td>
+                                                            <a class="btn btn-primary" role="button" type="submit"> VER </a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %} {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                                        <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN MODAL MODIFICAR -->
+{% for prof in listaProfesionales %} {% if prof.0 == profesional.0 %}
+<!-- MODAL ESPECIALIDAD ESPECIFICA -->
+<div class="col-md-12">
+    <div id="especialidadXProfesional{{prof.0}}{{prof.20}}" class="modal hide fade" data-backdrop="static">
+        <div class="modal-dialog modal-md2">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="modal-title">ESPECIALIDAD: {{prof.24}} </h4>
+                            <h5>N Matricula: {{prof.19}}</h5>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                    </div>
+                    <a class="btn btn-success" role="button" href="/agregarPrestacionXPro/{{profesional.0}}/{{prof.20}}" data-toggle="modal" data-target="#agregarPrestacionXPro{{profesional.0}}{{prof.20}}">NUEVA Prestacion</a>
+
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/modificarXEspecialidad/{{profesional.0}}/{{prof.20}}" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="numeroMPProfesional">N° Matricula Provincial </label>
+                                <input type="text" class="form-control" name="numeroMPProfesional" id="numeroMPProfesional" value="{{prof.19}}" required="required">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="prestacionXProfesional"> Prestaciones </label>
+                                <div class="list-group">
+
+                                    {% for prestacionEsp in listaPrestacionesEspPro %} {% if prestacionEsp.7 == prof.20 and prestacionEsp.4 == prof.0 %}
+                                    <a href="#" class="list-group-item list-group-item-action list-group-item-dark" id="prestacionXProfesional" name="prestacionXProfesional" value="{{prestacionEsp.9}}">
+                                                                        {{prestacionEsp.10}}</a> {% endif %} {% endfor %}
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                            <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                    <div class="hidden" style="display: none;">
+                        {{profEspec.clear()}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal agregar especialidad -->
+<div class="col-md-12">
+    <div id="agregarEspecialidadPro{{profesional.0}}" class="modal hide fade" data-backdrop="static">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="modal-title">Agregar especialidad</h4>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/agregarEspecialidadPro/{{profesional.0}}" method="POST">
+                        <input type="hidden" name="IdProfesional" value="{{profesional.0}}">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="especialidadProfesionalNueva"> Selecciona una especialidad</label>
+                                <select id="especialidadProfesionalNueva" name="especialidadProfesionalNueva" placeholder="Selecciona especialidad" class="form-control">
+                                                            {% for especialidadProfesional in especialidadProfesional %}
+                                                            <option value="{{especialidadProfesional.0}}"> {{especialidadProfesional.1}}  </option>
+                                                            {% endfor %}
+                                                            </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="numeroMPProfesional">N° Matricula Provincial </label>
+                                <input type="text" class="form-control" name="numeroMPProfesional" id="numeroMPProfesional" placeholder="N° M.P " required="required">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                            <button type="button" class="btn btn-danger btn-simple cancelEsp" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal agregar prestacion -->
+<div class="col-md-12">
+    <div id="agregarPrestacionXPro{{profesional.0}}{{prof.20}}" class="modal hide fade" data-backdrop="static">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="modal-title">Nueva prestacion para: {{prof.25}} </h4>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/agregarPrestacionEspPro/{{profesional.0}}/{{prof.20}}" method="POST">
+                        <div class="form-group col-md-4">
+
+                            <h2>{{prof.25}}</h2>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="prestacionProfesionalNueva"> Selecciona una prestacion</label>
+                            <select id="prestacionProfesionalNueva" name="prestacionProfesionalNueva" placeholder="Selecciona prestacion" class="form-control">
+                                                            {% for prestacion in listaPrestaciones %}
+                                                                <option value="{{prestacion.0}}"> {{prestacion.1}}  </option>
+                                                            {% endfor %}
+                                                            </select>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                            <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} {% endfor %} {% endfor %}
+</tbody>
+</table>
+
+
+<script>
+    $(document).ready(function() {
+        $(".jm-loadingpage").fadeOut("slow");;
+    });
+</script>
+
+
+
+
+
+<script>
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique paciente 
+    $(document).ready(function() {
+        $("#buscaProfesional").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tablaProfesionales tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+<script>
+    $(".clickEsp").click(function() {
+            $(".modalaocultar").modal('hide')
+        })
+        /* $(".espXprof").click(function(){   ///ME ABRE TODOS LOS MODALES 
+            $(".modalaocultar").modal('')
+        }) */
+</script>
+
+
+
+
+
+
+
+
+
+{% endif %} {% if session['idTusu'] ==2 %}
+<div class="container w-50 m-auto">
+    <div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-title">Usted no tiene permisos para acceder a esta seccion</h4>
+            <p class="card-text">Sera redirigido al Inicio</p>
+        </div>
+        <a href="/" class="btn btn-info">Volver</a>
+    </div>
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,274 @@
+{% extends 'layout.html' %} {% block title %} Cargar dia y hora de atención {% endblock %} {% block body %}
+{% if session['idTusu'] ==1 or session['idTusu'] ==3 or session['idTusu'] ==2 %} 
+<div class="row">
+
+    <div class="col-md-12">
+        {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    </div>
+</div>
+
+{% endfor %} {% endif %}{% endwith %}
+
+{% for profesional in listaProf %}
+
+{% if profesional.0 == idProf %}
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h2>Carga MASIVA de horarios de atención para:</h2>
+        <h2>{{profesional.1}}</h2>
+        <p>Recordá que por la mañana la franja horaria comienza 08.00AM y termina 12.00PM(mediodía). <br>   
+        Por la tarde, la franja horaria es de  12.00PM(mediodía) hasta 08.00PM (20HS). <br>
+        Se puede cargar de 1 a 10 combinaciones de "día/horario inicio/horario fin" a la vez.
+        Para realizar una carga CORRECTA completá todos los campos. De lo contrario, deja el día en "elegí dia" y los horarios vacíos.</p>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<div class='row'>    
+    <div class="form-group col-md-4">
+        <form action="/agregarDiaHoraAtenProMasiva/{{profesional.0}}" method="POST">
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <label for="diaAtencProfesional"> DIA DE ATENCIÓN</label>
+                    <select id="diaAtencProfesional" name="diaAtencProfesional"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="horaInicioAtencProfesional"> HORA INICIO </label>
+                    <input type="time" step='60' name="horaInicioAtencProfesional" id="horaInicioAtencProfesional" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="horaFinAtencProfesional"> HORA FIN </label>
+                    <input type="time" name="horaFinAtencProfesional" id="horaFinAtencProfesional" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional1" name="diaAtencProfesional1" class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional1" id="horaInicioAtencProfesional1" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional1" id="horaFinAtencProfesional1" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional2" name="diaAtencProfesional2"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional2" id="horaInicioAtencProfesional2" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional2" id="horaFinAtencProfesional2" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional3" name="diaAtencProfesional3"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional3" id="horaInicioAtencProfesional3" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional3" id="horaFinAtencProfesional3" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional4" name="diaAtencProfesional4"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional4" id="horaInicioAtencProfesional4" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional4" id="horaFinAtencProfesional4" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional5" name="diaAtencProfesional5"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional5" id="horaInicioAtencProfesional5" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional5" id="horaFinAtencProfesional5" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional6" name="diaAtencProfesional6" class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional6" id="horaInicioAtencProfesional6" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional6" id="horaFinAtencProfesional6" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional7" name="diaAtencProfesional7"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional7" id="horaInicioAtencProfesional7" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional7" id="horaFinAtencProfesional7" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional8" name="diaAtencProfesional8" class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional8" id="horaInicioAtencProfesional8" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional8" id="horaFinAtencProfesional8" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">               
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    <select id="diaAtencProfesional9" name="diaAtencProfesional9"  class="form-control">
+                        <option selected value = 0> Elegí día </option>
+                        {% for diaAtencProfesional in listaDias %}
+                        <option value="{{diaAtencProfesional.0}}"> {{diaAtencProfesional.1}}  </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="time" step='60' name="horaInicioAtencProfesional9" id="horaInicioAtencProfesional9" min="08:00" max="20:00">
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="time" name="horaFinAtencProfesional9" id="horaFinAtencProfesional9" step='60' min="08:00" max="20:00">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4"></div>
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('¿Confirmar carga de turnos? Si no seleccionaste ningún día, no se cargará ninguno nuevo')"> Guardar </button>
+                </div>
+                
+            </div>
+        </form>
+        <div class="form-row">
+            <div class="form-group col-md-4"></div>
+            <div class="form-group col-md-2">
+                {% if session['idTusu'] == 2 %} 
+                    <a type="button" class="btn btn-danger btn-simple" onclick="return confirm('¡ATENCIÓN! Si confirmas esta acción, se perderán todos los cambios NO guardados. Presiona OK para continuar o CANCEL para volver a la pantalla de carga')" href="/calendario">Cancelar</a> 
+                {% else %}
+                    <a type="button" class="btn btn-danger btn-simple" onclick="return confirm('¡ATENCIÓN! Si confirmas esta acción, se perderán todos los cambios NO guardados. Presiona OK para continuar o CANCEL para volver a la pantalla de carga')" href="/gestionarProfesional">Cancelar</a> 
+               {% endif %}
+
+            </div>
+        </div>
+        
+    </div>
+    <div class = 'form-group col-md-1'>
+        
+    </div>
+    <div class="form-group col-md-5">
+        <h2>DÍAS y HORARIOS DE ATENCIÓN</h2>
+        <table class="table table-striped" id='diaHoraTurnoProfesional'>
+            <thead>
+                <tr class="header">
+                    <th scope="col">DIA</th>
+                    <th scope="col">HORA INICIO</th>
+                    <th scope="col">HORA FIN</th>
+                </tr>
+            </thead>
+            <tbody>                                                                                
+                {% for diaHoraTurnoProf in listaDiaHoraTurno %}                                                                                    
+                    {% if diaHoraTurnoProf.1 == profesional.0 and diaHoraTurnoProf.6 ==0 %} 
+                    <form action="/quitarDiaHoraAtenPro/{{profesional.0}}" method="POST">
+                        <tr>
+                            {% for dia in listaDias %}
+                                    {% if diaHoraTurnoProf.2 == dia.0 %} 
+                                        <td>{{dia.1}}</td>
+                                    {% endif %}                                                                                            
+                            {% endfor %}
+                            <td>{{diaHoraTurnoProf.3}}</td>
+                            <td>{{diaHoraTurnoProf.4}}</td>         
+                            <input type="hidden" name="idDha" value="{{diaHoraTurnoProf.0}}">         
+                            <td>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Deseas eliminar este horario de atención?')"> BORRAR </button>
+                                <button type="button" class="btn btn-warning" onclick="return confirm('Función NO habilitada por el momento. Probá borrando y agregando uno nuevo. Disculpe la molestia')"> EDITAR </button>
+                            </td>
+                        </tr>
+                    </form>
+                    {% endif %}                                                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

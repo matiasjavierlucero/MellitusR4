@@ -1,0 +1,259 @@
+{% extends 'layout.html' %} {% block title %} Gestionar Paciente {% endblock %} {% block body %} {% if session['idTusu'] ==1 or session['idTusu'] ==2 or session['idTusu'] ==3 %}
+<div class="row">
+    <div class="col">
+        {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    </div>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+<div class="jm-loadingpage"></div>
+<!-- LISTA PACIENTES -->
+<div class="row text-center">
+    <div class="container text-center m-auto">
+        <h2 id="pacientesRegistrados" class="text-center m-auto">Pacientes Registrados</h2>
+    </div>
+</div>
+
+<hr>
+
+<div class="row m-1">
+    <div class="col-md-12">
+        <table class="table-md table-striped table-hover w-100" id='tablaPacientes'>
+            <thead>
+                <tr class="header">
+                    <th>Nombre</th>
+                    <th>D.N.I</th>
+                    <th class="ocultarcol">Fecha Nac</th>
+                    <th class="ocultarcol d-none">Domicilio</th>
+                    <th class="ocultarcol ">Localidad</th>
+                    <th class="ocultarcol d-none">Sexo</th>
+                    <th>Telefono</th>
+                    <th class="ocultarcol">Grupo Sanguineo</th>
+                    <th class="ocultarcol d-none">Nacionalidad</th>
+                    <th class="ocultarcol d-none">Religion</th>
+                    <th class="ocultarcol d-none">Observaciones</th>
+                    <th class="ocultarcol d-none">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" name="buscaPaciente" id="buscaPaciente" placeholder="buscar paciente" class="form-control" maxlength="255">
+                    </div>
+                </div>
+
+                {% for paciente in listaPacientes %}
+
+                <form action="/modificarPaciente/{{paciente.0}}">
+                    <tr>
+                        <input type="hidden" name="IdPac" value="{{paciente.0}}">
+                        <td class="ml-1">{{paciente.1}}</td>
+                        <td class="ml-1">{{paciente.5}}</td>
+                        <td class="ocultarcol ">{{paciente.3.strftime('%d-%m-%Y')}}</td>
+                        <td class="ocultarcol  d-none">{{paciente.6}}</td>
+                        {% for localidad in listaLocalidades %} {% if localidad.0 == paciente.7 %}
+                        <td class="ocultarcol">{{localidad.1}}</td>
+                        {% endif %} {% endfor %} {% if paciente.2 == 0 %}
+                        <td class="ocultarcol d-none ">Masculino</td>
+                        {% else %}
+                        <td class="ocultarcol d-none">Femenino</td>
+                        {% endif %}
+                        <td class="ml-1">{{paciente.9}}</td>
+                        <td class="ocultarcol">{{paciente.8}}</td>
+                        {% for nacionalidad in listaPaises %} {% if nacionalidad.0 == paciente.14 %}
+                        <td class="ocultarcol d-none">{{nacionalidad.1}}</td>
+                        {% endif %} {% endfor %} {% for religion in listaReligiones %} {% if religion.0 == paciente.10 %}
+                        <td class="ocultarcol d-none">{{religion.1}}</td>
+                        {% endif %} {% endfor %}
+                        <td class="ocultarcol d-none">{{paciente.15}}</td>
+                        {% if paciente.11 == 0 %}
+                        <td class="ocultarcol d-none">Activo</td>
+                        {% else %}
+                        <td class="ocultarcol d-none">Eliminado</td>
+                        {% endif %}
+                        <td class="ml-1  desaparece">
+                            <a class="btn btn-primary" role="button" type="button" href="/perfilPaciente{{paciente.0}}"> VER </a>
+                        </td>
+                    </tr>
+                </form>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- FIN LISTA  -->
+
+
+<!-- MODAL AGREGAR PACIENTE -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="modal fade " id="agregarPaciente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-between">
+                        <div class="modal-body">
+                            <h4 class="modal-title">Agregar Paciente</h4>
+                            <form action='/agregarPaciente' method="POST">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="apellidoPaciente"> Apellido </label>
+                                        <input type="text" class="form-control" name="apellidoPaciente" id="apellidoPaciente" placeholder="Apellido" required="required">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="nombrePaciente"> Nombre/s </label>
+                                        <input type="text" class="form-control" name="nombrePaciente" id="nombrePaciente" placeholder="Nombre" required="required">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="sexoPaciente "> Sexo </label>
+                                        <select id="sexoPaciente" name="sexoPaciente" class="form-control" required="required">
+                                  
+                                  <option value="1"> Femenino </option>
+                                  <option value="0"> Masculino </option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="tipoDocPaciente"> Tipo Documento </label>
+                                        <select id="tipoDocPaciente" name="tipoDocPaciente" class="form-control" required="required">
+                                  {% for tipoDocPaciente in listaTiposDoc %}
+                                    <option value="{{tipoDocPaciente.0}}"> {{tipoDocPaciente.1}}  </option>
+                                  {% endfor %}
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="numeroDocPaciente"> Número </label>
+                                        <input type="text" class="form-control" name="numeroDocPaciente" id="numeroDocPaciente" placeholder="N° de Documento" required="required">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="fechaNacPaciente"> Fecha de Nacimiento </label>
+                                        <input type="date" class="form-control" name="fechaNacPaciente" id="fechaNacPaciente">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="paisPaciente"> Pais </label>
+                                        <select id="paisPaciente" name="paisPaciente" class="form-control">
+                                  <option value="">Elija pais</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="provinciaPaciente"> Provincia </label>
+                                        <select id="provinciaPaciente" name="provinciaPaciente" class="form-control">
+                                  <option value="">Elija provincia</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="localidadPaciente"> Localidad </label>
+                                        <select id="localidadPaciente" name="localidadPaciente" class="form-control">
+                                  <option value="">Elija localidad</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="domicilioPaciente"> Domicilio </label>
+                                        <input type="text" class="form-control" name="domicilioPaciente" id="domicilioPaciente" placeholder="Domicilio" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="nacionalidadPaciente"> Nacionalidad </label>
+                                        <select id="nacionalidadPaciente" name="nacionalidadPaciente" class="form-control" required="required">
+                                  {% for nacionalidadPaciente in listaPaises %}
+                                    <option value="{{nacionalidadPaciente.0}}"> {{nacionalidadPaciente.1}}  </option>
+                                  {% endfor %}
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Teléfono </label>
+                                        <input type="tel" name="telefonoPaciente" placeholder="N° de teléfono" class="form-control" maxlength="10" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="grupoSangPaciente"> Grupo sanguíneo </label>
+                                        <select id="grupoSangPaciente" name="grupoSangPaciente" class="form-control">
+                                  {% for tipoGSPaciente in listaGSanguineos %}
+                                    <option value="{{tipoGSPaciente}}"> {{tipoGSPaciente}}  </option>
+                                  {% endfor %}
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="obraSocialPaciente"> Obra Social </label>
+                                        <select id="obraSocialPaciente" name="obraSocialPaciente" class="form-control" required>
+                                  <option value="">Elija O.Social</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="planObSoPaciente"> Plan Obra Social </label>
+                                        <select id="planObSoPaciente" name="planObSoPaciente" class="form-control" required>
+                                  <option value="">Elija Plan</option>
+                                </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="numAfiliadoPaciente"> N Afiliado </label>
+                                        <input type="text" class="form-control" name="numAfiliadoPaciente" id="numAfiliadoPaciente" placeholder="Numero de afiliado" required="required">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="fechaObSoPaciente"> Fecha Inicio en OS </label>
+                                        <input type="date" class="form-control" name="fechaObSoPaciente" id="fechaObSoPaciente">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="observacionPaciente"> Observaciones  </label>
+                                        <textarea class="form-control" id="observacionPaciente" name="observacionPaciente" maxlength="89" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="religionPaciente"> Religion </label>
+                                        <select id="religionPaciente" name="religionPaciente" class="form-control" required>
+                                  {% for religionPaciente in listaReligiones %}
+                                    <option value="{{religionPaciente.0}}"> {{religionPaciente.1}}  </option>
+                                  {% endfor %}
+                                </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Deseas confirmar los cambios?')"> Guardar </button>
+                                    <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $(".jm-loadingpage").fadeOut("slow");;
+    });
+</script>
+<script>
+    //BUSQUEDA DE PACIENTE---->TABLA DINAMICA
+    //Para que la secretaria verifique paciente 
+    $(document).ready(function() {
+        $("#buscaPaciente").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tablaPacientes tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+{% endif %} {% if session['idTusu'] ==2 %}
+<script>
+    $(".desaparece").addClass('d-none')
+</script>
+{% endif %} {% endblock %}

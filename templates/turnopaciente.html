@@ -1,0 +1,380 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+{% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %}
+{% for category, message in messages %}
+
+
+
+<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %} {% endif %}{% endwith %}
+<br><br>
+<div class="row ml-4 justify-content-between w-100">
+    <div class="col">
+        <a href="atras" class="btn btn-success">Atras <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    </div>
+    <div class="col text-center">
+        <h3 id="medico"></h3>
+    </div>
+    <div class="col text-end">
+        <button id="modCons" class="btn btn-warning d-none text-right">Modificar Búsqueda</button>
+    </div>
+
+</div>
+<div class="row m-4 justify-content-between">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 ml-2 text-center" id="colCons">
+        <div class="row mt-2 justify-content-center">
+            <label for="selectprofesional">Seleccione el/la Profesional</label>
+            <select class="form-control" name="selectprofesional" id="selectprofesional" require>
+                    <option value="" >Seleccione un Profesional</option>
+                {%for pro in profesionales%}
+                    <option value="{{pro.0}}">{{pro.1}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <label for="selectespecialidad">Seleccione la Especialidad</label>
+            <select class="form-control" name="selectespecialidad" id="selectespecialidad">
+                
+            </select>
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <label for="obraSocialPac">Mis Obras Sociales</label>
+            <select class="form-control" name="" id="obraSocialPac" require>
+                {%for osocplan in pacplan %}
+                <option value="{{osocplan.0}}">{{osocplan.14}}-Plan {{osocplan.8}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <button id="mostrarDisponible" class="btn btn-info mt-4">
+            Ver Turnos Disponibles
+        </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 " id="calendar">
+        <div id="calendario">
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Horario no laborable -->
+<div class="modal fade" id="nonbusiness" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Seleccione un horario laborable</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    No es posible guardar un turno en un horario no laborable.
+                    Seleccione un horario en el que el/la Profesional atienda
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear Turno-->
+
+<div class="modal fade fullscreen-modal" id="modalconfirmacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Turno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body justify-content-center">
+                <div id="ProfTurno"></div>
+                <hr>
+                <div id="DiaTurno"></div>
+                <br>
+                <div id="Desde"></div>
+                <br>
+                <div id="HastaTurno"></div>
+                <hr>
+                <div id="Practica"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info" id="confTurnoExt" >Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal de Alerta -->
+
+<div class="modal fade" id="mensajedealerta" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true" data-backdrop="static">
+    <div class="mensajecolor modal-dialog modal-sm " role="document">
+        <div class="modal-content bg-success">
+            <div class="modal-body text-center">
+                <i class="fa fa-check-circle" aria-hidden="true" style="font-size: 50px;color: white;"></i>
+                <h3 id="confirmacionrecarga" style="color: white;"></h3>
+                <h5 style="color: white;">Espere mientras se recarga su pagina</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+    $(".jm-loadingpage").fadeOut("slow");;
+});
+
+//Oculto la columna
+$("#modCons").prop("onclick", null).off("click");
+$("#modCons").click(function(){
+    $("#colCons").removeClass('d-none')
+    $("#calendar").removeClass('col-lg-12')
+    $("#calendar").addClass('col-lg-8')
+    $("#modCons").addClass('d-none')
+})
+
+Turn=''
+idProfesional=''
+$("#selectprofesional").change(function(){
+    idProfesional= $("#selectprofesional").val()
+    $.ajax({
+        url: 'EspProf',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify([{
+            'IdProf': idProfesional,
+        }]),
+        success: function (data) {
+            if (data.Mensaje == 'Correcto') {
+                listaid = [] //lista de id de las prestaciones
+                esp=(data.Data).map((item) => '<option value='+item[2]+'>'+item[5]+'</option>')
+                $("#selectespecialidad").html(esp)
+            }
+        }
+    });
+})
+$("#mostrarDisponible").prop("onclick", null).off("click"); // (new line) clean on click events
+$("#mostrarDisponible").click(function(){
+    $("#colCons").addClass('d-none')
+    $("#modCons").removeClass('d-none')
+    $("#calendar").removeClass('col-lg-8')
+    $("#calendar").addClass('col-lg-12')
+    $("#medico").html(nombreProfesional)
+    document.getElementById('calendario').innerHTML='',
+    idProfesional = $("#selectprofesional").val()
+    idEspecialidad = $("#selectespecialidad").val()
+    nombreProfesional= $('select[name="selectprofesional"] option:selected').text()
+    $("#medico").html(nombreProfesional)
+    nombreEspecialidad= $('select[name="selectespecialidad"] option:selected').text()
+    idPacientePlan = $("#obraSocialPac").val()
+    console.log(nombreEspecialidad)
+    $.ajax({
+        url: 'TraerTurnos',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify([{
+            'idProfesional': idProfesional,
+        }]),
+        success: function (data) {
+            if (data.Mensaje == 'Correcto') {
+                if ((data.Horarios.length) > 0) {
+                console.log(data.Turnos)
+                    var calendarEl = document.getElementById('calendario');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        events: data.Turnos,
+                        plugins: ['dayGrid', 'interaction', 'timeGrid', 'list', 'bootstrap'],
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'timeGridWeek,listWeek',
+                        },
+                        businessHours: data.Horarios,
+                        defaultView: 'timeGridWeek',  //Otra opcion es timeGridWeek, creo que la mas comoda
+                        themeSystem: 'bootstrap',    //Tema
+                        slotDuration: '00:30',
+                        slotLabelInterval: '00:30',
+                        eventOverlap: false,//No deja poner un evento sobre otro, o al menos eso deberia hacer
+                        minTime: "07:00:00",
+                        maxTime: "20:00:00",
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        locale: 'es',
+                        omitZeroMinute: false,
+                        allDaySlot: false,
+                        meridiem: 'short',
+                        hiddenDays: [0],
+
+                        //Click sobre ocupado
+                        eventClick: function (info, calEvent, jsEvent, view, events, element) {
+                            console.log('Ocupado')
+                        },
+
+                        //Click Sobre Dia
+                         dateClick: function (info, jsEvent) {
+                    
+                            console.log(info.jsEvent.target.className)
+                            fecha = new Date(info.dateStr);//convierto el numero en Dato
+
+                            //Agrego los 0, para cuando la hora o los minutos es menor a 10
+                            function addZero(i) {
+                                if (i < 10) {
+                                    i = "0" + i;
+                                }
+                                return i;
+                            }
+
+                            //Creo las variables hora, minuto, año, mes y dia
+                            hora = addZero(fecha.getHours());
+                            minutos = addZero(fecha.getMinutes());
+                            anio = addZero(fecha.getFullYear());
+                            mes = addZero(fecha.getMonth() + 1);
+                            dia = addZero(fecha.getDate());
+
+                            //Dia y Hora de Inicio
+                            var Day = anio + '-' + mes + '-' + dia; //var Day = info.dateStr.substr(0,10); // ----------> Esta es una opcion menos coloquial de conseguir la fecha
+                            var HourStart = hora + ':' + minutos;  //var HourStart =info.dateStr.substr(12,4); Otra forma de conseguir la fecha
+
+                            //Hora de finalizacion
+                            var milisegundosfin = fecha.setMinutes(fecha.getMinutes());
+                            var date = new Date(milisegundosfin);
+                            var horafin = addZero(date.getHours());
+                            var minutosfin = addZero(date.getMinutes());
+                            var HourEnd = horafin + ':' + minutosfin;
+
+                            //MOSTRAR ALERTA SI EL PROFESIONAL NO ATIENDE EN ESE HORARIO
+
+                            //Funcion Dividir Hora en Hora y Minutos
+                            function convertir_seg_business(parametro) {
+                                Hor = Number(parametro.slice(0, 2))
+                                Min = Number(parametro.slice(3, 5))
+                                return Number(Hor, Min)
+
+                            }
+
+                            //Funcion Convertir Hora a Segundos
+                            function convertir_seg(ParamHora, ParamMin) {
+                                segundos_inicio = ParamHora * 3600 + ParamMin * 60
+                                return segundos_inicio
+                            }
+
+                            //Hora Marcada
+                            HoraMarcada = convertir_seg(hora, minutos)
+
+                            
+                            if (info.jsEvent.srcElement.className || info.jsEvent.target.className) {
+                                $('#nonbusiness').modal()
+                            }
+
+                             else {
+                                $('#ProfTurno').html('<div class="row"><h3>Nuevo Turno para : '+ nombreProfesional+'</h3></div>');
+                                $('#Desde').html('<div class="row"><h5>Desde la hora : ' + HourStart + '</h5></div>')
+                                $('#DiaTurno').html('<div class="row"><h5>El Día : ' + Day + '</h5></div>')
+                                $("#Practica").html('<div class="row"><h5>Especialidad : ' + nombreEspecialidad + '</h5></div>')
+                                var final = HourStart.split(':'); // split it at the colons
+                                // minutes are worth 60 seconds. Hours are worth 60 minutes.
+                                var segstart = (+final[0]) * 60 * 60 + (+final[1]) * 60;
+                                var a = String('00:30:00').split(':'); // split it at the colons
+                                // minutes are worth 60 seconds. Hours are worth 60 minutes.
+                                var segundosatencion = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                                var time = Number(segstart) + Number(segundosatencion)
+                                var hours = Math.floor(time / 3600);
+                                var minutes = Math.floor((time % 3600) / 60);
+                                var seconds = time % 6
+                                if (hours < 10) {
+                                    hours = '0' + hours
+                                }
+                                //Anteponiendo un 0 a los minutos si son menos de 10 
+                                minutes = minutes < 10 ? '0' + minutes : minutes;
+                                //Anteponiendo un 0 a los segundos si son menos de 10 
+                                seconds = seconds < 10 ? '0' + seconds : seconds;
+                                result = hours + ":" + minutes + ":" + seconds;
+                                result = result.split(':')
+                                horafinal = result[0] + ':' + result[1]
+                                console.log(horafinal)
+                                $('#HastaTurno').html('<div class="row"><h5>Hasta la hora : ' + horafinal + '</h5></div>')
+                                $("#modalconfirmacion").modal()
+                                $("#confTurnoExt").prop("onclick", null).off("click"); // (new line) clean on click events
+                                $("#confTurnoExt").click(function(){
+
+                                    console.log(idProfesional)
+                                    console.log(idEspecialidad)
+                                    console.log(Day)
+                                    console.log(HourStart)
+                                    console.log(horafinal)
+                                    console.log(idPacientePlan)
+                                    $("#confTurnoExt").prop('disabled', true)
+                                    $.ajax({
+                                        url: 'crearTurnoExterno',
+                                        type: 'post',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify([{
+                                            'idProfesional': idProfesional,
+                                            'idEspecialidad': idEspecialidad,
+                                            'HorTur': HourStart,
+                                            'HorFtur': horafinal,
+                                            'DiaTur': Day,
+                                            'idPacientePlan': idPacientePlan
+                                        }]),
+                                        success: function (data) {
+                                            if (data.Mensaje == 'Correcto') {
+                                                $("#modalconfirmacion").modal('toggle')
+                                                $("#confirmacionrecarga").html('Su Turno ha sido guardado correctamente, recibira un recordatorio por Whatsapp 24hs antes ')
+                                                $("#mensajedealerta").modal()
+                                                setTimeout(window.location.href = "atras", 2000)
+                                            }
+                                        }
+                                    })
+
+                                })
+                            } 
+                            }
+                        });
+                    calendar.render();
+                }else{
+                    $("#calendario").html('<div class="col text-center m-auto"><div class="display-4 text-center m-auto" style="font-size: 1.5rem;"><b>Profesional seleccionado sin horario de atención asignado<b/></div></div>')
+                }}
+            }
+        })
+})
+
+</script>
+<style>
+    .fc-time-grid-event.fc-event.fc-start.fc-end {
+        background-color: rgb(104, 9, 9);
+        padding: 0%;
+        margin-left: -3px;
+        margin-top: -1px;
+        width: 110%;
+        border-color: deeppink;
+        text-align: center;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .fc-time-grid-event-inset.fc-short{
+        left:0%;
+    }
+    tr{
+      height: 50px;  
+    }
+</style>
+
+{% endblock %}

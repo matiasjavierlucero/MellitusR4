@@ -1,0 +1,162 @@
+[2020-03-24 17:42:19,470: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 17:42:19,479: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 17:42:20,497: INFO/MainProcess] mingle: all alone
+[2020-03-24 17:42:20,521: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 18:34:49,742: INFO/MainProcess] Received task: app.whatsappero[6874af3d-7e16-4c35-a98b-b0bfa55f58b0]  
+[2020-03-24 18:40:28,163: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 18:40:28,172: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 18:40:29,195: INFO/MainProcess] mingle: all alone
+[2020-03-24 18:40:29,275: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:00:40,999: INFO/MainProcess] Received task: app.whatsappero[55fd125c-e69a-4d7a-8fba-dbf3daf035b7]  
+[2020-03-24 19:02:01,875: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 19:02:01,887: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 19:02:02,909: INFO/MainProcess] mingle: all alone
+[2020-03-24 19:02:02,928: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:02:42,439: INFO/MainProcess] Received task: app.whatsappero[56f92187-4d22-46d5-bd36-ea76c327f7ab]  
+[2020-03-24 19:04:20,041: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 19:04:20,053: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 19:04:21,079: INFO/MainProcess] mingle: all alone
+[2020-03-24 19:04:21,127: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:22:07,225: INFO/MainProcess] Received task: app.whatsappero[73f2ea7c-f7a3-48f7-abe2-311712224217]  
+[2020-03-24 19:39:35,857: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 19:39:35,868: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 19:39:36,898: INFO/MainProcess] mingle: all alone
+[2020-03-24 19:39:36,937: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:40:47,860: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 19:40:47,873: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 19:40:48,895: INFO/MainProcess] mingle: all alone
+[2020-03-24 19:40:48,938: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:42:49,024: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-24 19:42:49,039: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-24 19:42:50,060: INFO/MainProcess] mingle: all alone
+[2020-03-24 19:42:50,083: INFO/MainProcess] worker@alpenth ready.
+[2020-03-24 19:43:59,023: INFO/MainProcess] Received task: app.whatsappero[a0c13f17-9d65-49f1-b6b5-4f37679a9873]  
+[2020-03-25 00:26:06,018: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 00:26:06,026: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 00:26:07,043: INFO/MainProcess] mingle: all alone
+[2020-03-25 00:26:07,063: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 00:28:01,509: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 00:28:01,518: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 00:28:02,539: INFO/MainProcess] mingle: all alone
+[2020-03-25 00:28:02,554: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 00:34:21,914: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 00:34:21,923: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 00:34:22,945: INFO/MainProcess] mingle: all alone
+[2020-03-25 00:34:23,014: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 00:38:41,025: INFO/MainProcess] Received task: app.whatsappero[bf56f7cb-045e-4245-bb51-153a8577887a]  
+[2020-03-25 00:48:52,079: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 00:48:52,087: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 00:48:53,112: INFO/MainProcess] mingle: all alone
+[2020-03-25 00:48:53,162: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 00:53:29,678: INFO/MainProcess] Received task: app.whatsappero[790530fd-8364-425a-a60e-9fbcafbb5e6f]  
+[2020-03-25 00:56:42,004: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 00:56:42,016: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 00:56:43,036: INFO/MainProcess] mingle: all alone
+[2020-03-25 00:56:43,064: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:00:56,001: INFO/MainProcess] Received task: app.whatsappero[421aa19c-8f33-4128-8bb9-b320e8ee8adc]  
+[2020-03-25 01:06:02,644: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:06:02,653: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:06:03,676: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:06:03,687: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:13:29,733: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:13:29,741: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:13:30,759: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:13:30,771: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:17:22,950: INFO/MainProcess] Received task: app.whatsappero[addf0674-d3c9-4ccf-8e2e-c6bf09235fdc]  
+[2020-03-25 01:18:50,911: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:18:50,923: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:18:51,953: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:18:51,971: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:22:26,407: INFO/MainProcess] Received task: app.whatsappero[b7839ef9-e9ed-4648-b62f-6596190aeeb7]  
+[2020-03-25 01:30:28,283: INFO/MainProcess] Received task: app.whatsappero[bf8deb5e-c29d-4f10-a40d-78432ea80da4]  
+[2020-03-25 01:32:09,780: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:32:09,793: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:32:10,817: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:32:10,838: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:43:32,935: INFO/MainProcess] Received task: app.whatsappero[c5757c52-5d44-43fe-a611-82d038aab1db]  
+[2020-03-25 01:46:23,797: INFO/MainProcess] Received task: app.whatsappero[2629a081-ea69-4579-ba26-71949c4b41f7]  
+[2020-03-25 01:46:34,511: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:46:34,524: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:46:35,551: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:46:35,569: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 01:50:43,995: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 01:50:44,003: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 01:50:45,022: INFO/MainProcess] mingle: all alone
+[2020-03-25 01:50:45,040: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:02:23,327: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:02:23,336: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:02:24,357: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:02:24,374: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:06:20,012: INFO/MainProcess] Received task: app.whatsappero[fb9b5167-a01b-4597-84cc-4514a2e38fc8]  
+[2020-03-25 02:09:17,029: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:09:17,039: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:09:18,062: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:09:18,100: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:15:43,749: INFO/MainProcess] Received task: app.whatsappero[69e8249a-8999-4610-83d3-f64e31fd731a]  
+[2020-03-25 02:18:06,059: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:18:06,068: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:18:07,086: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:18:07,099: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:22:13,349: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:22:13,362: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:22:14,385: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:22:14,418: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:25:14,275: INFO/MainProcess] Received task: app.whatsappero[386076c8-c3dd-4d9d-adff-5e3fb3be8bc7]  
+[2020-03-25 02:40:53,584: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:40:53,596: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:40:54,622: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:40:54,635: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:43:59,539: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:43:59,550: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:44:00,584: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:44:00,635: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:46:14,692: INFO/MainProcess] Received task: app.whatsappero[c021bce2-4b88-43d7-86e6-a2e5b9d89ec6]  
+[2020-03-25 02:48:17,481: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:48:17,495: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:48:18,521: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:48:18,580: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:51:49,699: INFO/MainProcess] Received task: app.whatsappero[14316ee3-6f67-4aa2-b0e8-896182651a10]  
+[2020-03-25 02:55:11,744: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:55:11,757: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:55:12,786: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:55:12,852: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 02:58:22,865: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 02:58:22,872: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 02:58:23,894: INFO/MainProcess] mingle: all alone
+[2020-03-25 02:58:23,964: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:01:32,928: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:01:32,938: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:01:33,959: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:01:33,996: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:04:49,159: INFO/MainProcess] Received task: app.whatsappero[4948ce33-3d4a-410a-a2e8-c9d256bbd1db]  
+[2020-03-25 03:06:24,882: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:06:24,892: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:06:25,912: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:06:25,927: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:07:54,404: INFO/MainProcess] Received task: app.whatsappero[acdbf280-dcd1-435d-b2da-fe5caeb9b0ca]  
+[2020-03-25 03:11:53,820: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:11:53,831: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:11:54,858: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:11:54,926: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:17:50,430: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:17:50,440: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:17:51,467: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:17:51,514: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:20:36,248: INFO/MainProcess] Received task: app.whatsappero[33b68c21-f7dd-4d88-af04-51dd09ee5866]  
+[2020-03-25 03:22:10,427: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:22:10,436: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:22:11,459: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:22:11,489: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:26:45,880: INFO/MainProcess] Received task: app.whatsappero[fe24cdae-c860-4375-a442-0ac3f55e39d1]  
+[2020-03-25 03:30:36,296: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:30:36,308: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:30:37,331: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:30:37,356: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:36:48,942: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:36:48,951: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:36:49,970: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:36:49,984: INFO/MainProcess] worker@alpenth ready.
+[2020-03-25 03:41:34,715: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2020-03-25 03:41:34,723: INFO/MainProcess] mingle: searching for neighbors
+[2020-03-25 03:41:35,747: INFO/MainProcess] mingle: all alone
+[2020-03-25 03:41:35,813: INFO/MainProcess] worker@alpenth ready.

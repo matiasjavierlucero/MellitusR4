@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% block title %} Elija su Profesional {% endblock %}
+{% block body %}
+
+{% if session['idTusu'] ==1 or session['idTusu']==2 or session['idTusu']==3 %}
+
+<div class="row">
+    <div class="col-xs-none col-sm-none col-md-none col-lg-4"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="container">
+        <div class="card p-4 m-1">
+          <img src="../static/images/profesionales.svg" style="height: 80px;">
+          <p style="font-size: 1.5rem;font-family: 'Ubuntu', sans-serif;font-style: normal;">Seleccione el/la Profesional al que desea acceder</p>
+          <hr>
+          <form action="calendario" method="post" class="pt-3 text-center">
+            <select name="medico" class="form-control mb-3" id="profesional">
+              {% for med in listamedicos %}
+              <option value="{{med.0}}">{{med.1}}</option>
+              {% endfor %}
+            </select>
+            <div class="row d-flex justify-content-center m-1">
+              <button class="btn btn-primary mr-1" type="submit"><span><i class="fa fa-sign-in" aria-hidden="true"></i></span> Ingresar</button>
+              <a href="/" class="btn btn-danger ml-1 "><span><i class="fa fa-backward" aria-hidden="true"></i></span> Regresar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-none col-sm-none col-md-none col-lg-4"></div>
+  </div>
+
+
+
+{% endif %}
+
+{% endblock %}

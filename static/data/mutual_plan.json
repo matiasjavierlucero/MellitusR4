@@ -1,0 +1,1022 @@
+[
+    {
+        "idOS": 1,
+        "nameOS": "Particular",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 2,
+        "nameOS": "Aca Salud                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 3,
+        "nameOS": "Agua Y Energia Cap. Federal                  ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 4,
+        "nameOS": "Amffa Salud                                  ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 5,
+        "nameOS": "Amicos                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 6,
+        "nameOS": "Amma Salud                                   ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 7,
+        "nameOS": "Amor Y Paz                                   ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 8,
+        "nameOS": "Amttac                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 9,
+        "nameOS": "Aspurc                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 10,
+        "nameOS": "Caja De Abogados                             ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 11,
+        "nameOS": "Caja Notarial                                ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 12,
+        "nameOS": "Carlos  Ariel\r",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 13,
+        "nameOS": "Chialvetto Leonardo\r",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 14,
+        "nameOS": "Choferes                                     ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 15,
+        "nameOS": "Ciencias Economicas                          ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 16,
+        "nameOS": "Cocheria Rio Cuarto                          ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 17,
+        "nameOS": "Consolidar                                   ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 18,
+        "nameOS": "Federada Salud (25 De Junio)                 ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 19,
+        "nameOS": "scis(femos)",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 20,
+        "nameOS": "Galeno                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 21,
+        "nameOS": "Gastronomicos                                ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 22,
+        "nameOS": "Giraudo Natalia\r",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 23,
+        "nameOS": "Graficos                                     ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 24,
+        "nameOS": "Grassi Ss                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 25,
+        "nameOS": "Jerarquico Salud                             ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 26,
+        "nameOS": "Madederos                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 27,
+        "nameOS": "Medicus                                      ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 28,
+        "nameOS": "Medife                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 29,
+        "nameOS": "Met Medicina Privada                         ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 30,
+        "nameOS": "Municipales                                  ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 31,
+        "nameOS": "Mutual Medica                                ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 32,
+        "nameOS": "O.S.Personal Farmacia (O.S.P.F.)             ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 33,
+        "nameOS": "Omint                                        ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 34,
+        "nameOS": "Opdea                                        ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 35,
+        "nameOS": "Osadef (O.S. Empleados De Farmacia)          ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 36,
+        "nameOS": "Osalara                                      ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 37,
+        "nameOS": "Osba                                         ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 38,
+        "nameOS": "Osde                                         ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 39,
+        "nameOS": "Osdop                                        ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 40,
+        "nameOS": "Osfe (Ferroviarios)                          ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 41,
+        "nameOS": "Ositac (Orion)                               ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 42,
+        "nameOS": "Ospaca                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 43,
+        "nameOS": "Ospe Nasa                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 44,
+        "nameOS": "Ospe Petroleros                              ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 45,
+        "nameOS": "Ospe Ypf                                     ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 46,
+        "nameOS": "Osperhyra                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 47,
+        "nameOS": "Ospia Alimentacion                           ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 48,
+        "nameOS": "Ospif                                        ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 49,
+        "nameOS": "Osprera                                      ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 50,
+        "nameOS": "Ossana                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 51,
+        "nameOS": "Osseg (Seguros)                              ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 52,
+        "nameOS": "Ostrac (Ostyr)                               ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 53,
+        "nameOS": "Pami                                         ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 54,
+        "nameOS": "Paulucci                                     ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 55,
+        "nameOS": "Poder Judicial                               ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 56,
+        "nameOS": "Policia Federal                              ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 57,
+        "nameOS": "Prensa                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 58,
+        "nameOS": "Sadaic                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 59,
+        "nameOS": "San Pedro                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 60,
+        "nameOS": "Sanarte                                      ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 61,
+        "nameOS": "Sancor                                       ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 62,
+        "nameOS": "Scis                                         ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 63,
+        "nameOS": "Sivendia (Florencio Sanchez)                 ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 64,
+        "nameOS": "Sociedad Española                            ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 65,
+        "nameOS": "Sociedad Francesa                            ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 66,
+        "nameOS": "Tombolini                                    ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 67,
+        "nameOS": "Tv Salud                                     ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 68,
+        "nameOS": "Unimed Asspe                                 ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 128,
+        "nameOS": "﻿Aapm (Osapm)                                ",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 129,
+        "nameOS": "Ospecor",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 130,
+        "nameOS": "Apross",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 131,
+        "nameOS": "AAPM",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 132,
+        "nameOS": "Amsterdam Salud S.A",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 133,
+        "nameOS": "Luis Pasteur",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 134,
+        "nameOS": "Nobis",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 135,
+        "nameOS": "Osfatlyf (luz y fuerza)",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 136,
+        "nameOS": "Opedyc",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 137,
+        "nameOS": "Pevencion salud S.A",
+        "parent_idOS": 0
+    },
+    {
+        "idOS": 1,
+        "nameOS": "Base",
+        "parent_idOS": 1
+    },
+    {
+        "idOS": 2,
+        "nameOS": "Base",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 3,
+        "nameOS": "Base",
+        "parent_idOS": 3
+    },
+    {
+        "idOS": 4,
+        "nameOS": "Base",
+        "parent_idOS": 4
+    },
+    {
+        "idOS": 5,
+        "nameOS": "Base",
+        "parent_idOS": 5
+    },
+    {
+        "idOS": 6,
+        "nameOS": "Base",
+        "parent_idOS": 6
+    },
+    {
+        "idOS": 7,
+        "nameOS": "Base",
+        "parent_idOS": 7
+    },
+    {
+        "idOS": 8,
+        "nameOS": "Base",
+        "parent_idOS": 8
+    },
+    {
+        "idOS": 9,
+        "nameOS": "Base",
+        "parent_idOS": 9
+    },
+    {
+        "idOS": 10,
+        "nameOS": "Base",
+        "parent_idOS": 10
+    },
+    {
+        "idOS": 11,
+        "nameOS": "Base",
+        "parent_idOS": 11
+    },
+    {
+        "idOS": 12,
+        "nameOS": "Base",
+        "parent_idOS": 12
+    },
+    {
+        "idOS": 13,
+        "nameOS": "Base",
+        "parent_idOS": 13
+    },
+    {
+        "idOS": 14,
+        "nameOS": "Base",
+        "parent_idOS": 14
+    },
+    {
+        "idOS": 15,
+        "nameOS": "Base",
+        "parent_idOS": 15
+    },
+    {
+        "idOS": 16,
+        "nameOS": "Base",
+        "parent_idOS": 16
+    },
+    {
+        "idOS": 17,
+        "nameOS": "Base",
+        "parent_idOS": 17
+    },
+    {
+        "idOS": 18,
+        "nameOS": "Base",
+        "parent_idOS": 18
+    },
+    {
+        "idOS": 19,
+        "nameOS": "Base",
+        "parent_idOS": 19
+    },
+    {
+        "idOS": 20,
+        "nameOS": "Base",
+        "parent_idOS": 20
+    },
+    {
+        "idOS": 21,
+        "nameOS": "Base",
+        "parent_idOS": 21
+    },
+    {
+        "idOS": 22,
+        "nameOS": "Base",
+        "parent_idOS": 22
+    },
+    {
+        "idOS": 23,
+        "nameOS": "Base",
+        "parent_idOS": 23
+    },
+    {
+        "idOS": 24,
+        "nameOS": "Base",
+        "parent_idOS": 24
+    },
+    {
+        "idOS": 25,
+        "nameOS": "Base",
+        "parent_idOS": 25
+    },
+    {
+        "idOS": 26,
+        "nameOS": "Base",
+        "parent_idOS": 26
+    },
+    {
+        "idOS": 27,
+        "nameOS": "Base",
+        "parent_idOS": 27
+    },
+    {
+        "idOS": 28,
+        "nameOS": "Base",
+        "parent_idOS": 28
+    },
+    {
+        "idOS": 29,
+        "nameOS": "Base",
+        "parent_idOS": 29
+    },
+    {
+        "idOS": 30,
+        "nameOS": "Base",
+        "parent_idOS": 30
+    },
+    {
+        "idOS": 31,
+        "nameOS": "Base",
+        "parent_idOS": 31
+    },
+    {
+        "idOS": 32,
+        "nameOS": "Base",
+        "parent_idOS": 32
+    },
+    {
+        "idOS": 33,
+        "nameOS": "Base",
+        "parent_idOS": 33
+    },
+    {
+        "idOS": 34,
+        "nameOS": "Base",
+        "parent_idOS": 34
+    },
+    {
+        "idOS": 35,
+        "nameOS": "Base",
+        "parent_idOS": 35
+    },
+    {
+        "idOS": 36,
+        "nameOS": "Base",
+        "parent_idOS": 36
+    },
+    {
+        "idOS": 37,
+        "nameOS": "Base",
+        "parent_idOS": 37
+    },
+    {
+        "idOS": 38,
+        "nameOS": "Base",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 39,
+        "nameOS": "Base",
+        "parent_idOS": 39
+    },
+    {
+        "idOS": 40,
+        "nameOS": "Base",
+        "parent_idOS": 40
+    },
+    {
+        "idOS": 41,
+        "nameOS": "Base",
+        "parent_idOS": 41
+    },
+    {
+        "idOS": 42,
+        "nameOS": "Base",
+        "parent_idOS": 42
+    },
+    {
+        "idOS": 43,
+        "nameOS": "Base",
+        "parent_idOS": 43
+    },
+    {
+        "idOS": 44,
+        "nameOS": "Base",
+        "parent_idOS": 44
+    },
+    {
+        "idOS": 45,
+        "nameOS": "Base",
+        "parent_idOS": 45
+    },
+    {
+        "idOS": 46,
+        "nameOS": "Base",
+        "parent_idOS": 46
+    },
+    {
+        "idOS": 47,
+        "nameOS": "Base",
+        "parent_idOS": 47
+    },
+    {
+        "idOS": 48,
+        "nameOS": "Base",
+        "parent_idOS": 48
+    },
+    {
+        "idOS": 49,
+        "nameOS": "Base",
+        "parent_idOS": 49
+    },
+    {
+        "idOS": 50,
+        "nameOS": "Base",
+        "parent_idOS": 50
+    },
+    {
+        "idOS": 51,
+        "nameOS": "Base",
+        "parent_idOS": 51
+    },
+    {
+        "idOS": 52,
+        "nameOS": "Base",
+        "parent_idOS": 52
+    },
+    {
+        "idOS": 53,
+        "nameOS": "Base",
+        "parent_idOS": 53
+    },
+    {
+        "idOS": 54,
+        "nameOS": "Base",
+        "parent_idOS": 54
+    },
+    {
+        "idOS": 55,
+        "nameOS": "Base",
+        "parent_idOS": 55
+    },
+    {
+        "idOS": 56,
+        "nameOS": "Base",
+        "parent_idOS": 56
+    },
+    {
+        "idOS": 57,
+        "nameOS": "Base",
+        "parent_idOS": 57
+    },
+    {
+        "idOS": 58,
+        "nameOS": "Base",
+        "parent_idOS": 58
+    },
+    {
+        "idOS": 59,
+        "nameOS": "Base",
+        "parent_idOS": 59
+    },
+    {
+        "idOS": 60,
+        "nameOS": "Base",
+        "parent_idOS": 60
+    },
+    {
+        "idOS": 61,
+        "nameOS": "Base",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 62,
+        "nameOS": "Base",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 63,
+        "nameOS": "Base",
+        "parent_idOS": 63
+    },
+    {
+        "idOS": 64,
+        "nameOS": "Base",
+        "parent_idOS": 64
+    },
+    {
+        "idOS": 65,
+        "nameOS": "Base",
+        "parent_idOS": 65
+    },
+    {
+        "idOS": 66,
+        "nameOS": "Base",
+        "parent_idOS": 66
+    },
+    {
+        "idOS": 67,
+        "nameOS": "Base",
+        "parent_idOS": 67
+    },
+    {
+        "idOS": 68,
+        "nameOS": "Base",
+        "parent_idOS": 68
+    },
+    {
+        "idOS": 69,
+        "nameOS": "Base",
+        "parent_idOS": 128
+    },
+    {
+        "idOS": 70,
+        "nameOS": "PMI-3000",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 71,
+        "nameOS": "PMI-5000",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 72,
+        "nameOS": "PMI-2000",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 73,
+        "nameOS": "PMI-Soltero",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 74,
+        "nameOS": "PMI-1000",
+        "parent_idOS": 2
+    },
+    {
+        "idOS": 75,
+        "nameOS": "Full",
+        "parent_idOS": 5
+    },
+    {
+        "idOS": 76,
+        "nameOS": "Medio",
+        "parent_idOS": 5
+    },
+    {
+        "idOS": 77,
+        "nameOS": "Plan Full",
+        "parent_idOS": 4
+    },
+    {
+        "idOS": 78,
+        "nameOS": "Plan Medio",
+        "parent_idOS": 4
+    },
+    {
+        "idOS": 79,
+        "nameOS": "Plancito",
+        "parent_idOS": 4
+    },
+    {
+        "idOS": 80,
+        "nameOS": "Medio",
+        "parent_idOS": 3
+    },
+    {
+        "idOS": 81,
+        "nameOS": "Nombre No Cargado",
+        "parent_idOS": 3
+    },
+    {
+        "idOS": 82,
+        "nameOS": "Full",
+        "parent_idOS": 129
+    },
+    {
+        "idOS": 83,
+        "nameOS": "plan 2000",
+        "parent_idOS": 18
+    },
+    {
+        "idOS": 84,
+        "nameOS": "plan 1000",
+        "parent_idOS": 18
+    },
+    {
+        "idOS": 85,
+        "nameOS": "oro y plata",
+        "parent_idOS": 20
+    },
+    {
+        "idOS": 86,
+        "nameOS": "blanco y azul",
+        "parent_idOS": 20
+    },
+    {
+        "idOS": 87,
+        "nameOS": "pmi",
+        "parent_idOS": 25
+    },
+    {
+        "idOS": 88,
+        "nameOS": "Nombre No Cargado",
+        "parent_idOS": 25
+    },
+    {
+        "idOS": 89,
+        "nameOS": "s2000",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 90,
+        "nameOS": "S3000",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 91,
+        "nameOS": "S3000E",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 92,
+        "nameOS": "S3500",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 93,
+        "nameOS": "S4000E",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 94,
+        "nameOS": "S4065E",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 95,
+        "nameOS": "S5000",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 96,
+        "nameOS": "GEN4000",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 97,
+        "nameOS": "Nombre No Cargado",
+        "parent_idOS": 61
+    },
+    {
+        "idOS": 98,
+        "nameOS": "HS95",
+        "parent_idOS": 68
+    },
+    {
+        "idOS": 99,
+        "nameOS": "SPS95",
+        "parent_idOS": 68
+    },
+    {
+        "idOS": 100,
+        "nameOS": "SC 50 ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 101,
+        "nameOS": " SC 100  ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 102,
+        "nameOS": "SC 250 ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 103,
+        "nameOS": "SC 300 ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 104,
+        "nameOS": " SC 500 ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 105,
+        "nameOS": "SC 550",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 106,
+        "nameOS": "SC 600 ",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 107,
+        "nameOS": "SC1100",
+        "parent_idOS": 62
+    },
+    {
+        "idOS": 108,
+        "nameOS": " 210",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 109,
+        "nameOS": "310",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 110,
+        "nameOS": "410",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 111,
+        "nameOS": "450",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 112,
+        "nameOS": "510",
+        "parent_idOS": 38
+    },
+    {
+        "idOS": 113,
+        "nameOS": "BASE",
+        "parent_idOS": 137
+    },
+    {
+        "idOS": 114,
+        "nameOS": "BASE",
+        "parent_idOS": 131
+    },
+    {
+        "idOS": 115,
+        "nameOS": "BASE",
+        "parent_idOS": 132
+    },
+    {
+        "idOS": 116,
+        "nameOS": "BASE",
+        "parent_idOS": 130
+    },
+    {
+        "idOS": 117,
+        "nameOS": "BASE",
+        "parent_idOS": 137
+    },
+    {
+        "idOS": 118,
+        "nameOS": "BASE",
+        "parent_idOS": 135
+    },
+    {
+        "idOS": 119,
+        "nameOS": "B200",
+        "parent_idOS": 134
+    },
+    {
+        "idOS": 120,
+        "nameOS": "B300",
+        "parent_idOS": 134
+    },
+    {
+        "idOS": 121,
+        "nameOS": "N200",
+        "parent_idOS": 134
+    },
+    {
+        "idOS": 122,
+        "nameOS": "N400",
+        "parent_idOS": 134
+    },
+    {
+        "idOS": 123,
+        "nameOS": "N500",
+        "parent_idOS": 134
+    },
+    {
+        "idOS": 124,
+        "nameOS": "BASE",
+        "parent_idOS": 1
+    },
+    {
+        "idOS": 125,
+        "nameOS": "BASE",
+        "parent_idOS": 136
+    },
+    {
+        "idOS": 126,
+        "nameOS": "BASE",
+        "parent_idOS": 133
+    }
+]
