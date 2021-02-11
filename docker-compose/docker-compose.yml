@@ -29,7 +29,7 @@ services:
       - PORT=5000
       - HOST="0.0.0.0"
       - SECRET_KEY=A5YJzOAlml6E9GgSTB4BXc2WHB3XdA1O
-      - SQLALCHEMY_DATABASE_URI=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@plan-management-db:${MYSQL_PORT}/${MYSQL_DB_NAME}
+      - SQLALCHEMY_DATABASE_URI=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB_NAME}
       #- CSRF_SESSION_KEY=
       #- FILE_ALLOWED_EXTENSIONS=
       - DEBUG="true"
@@ -62,4 +62,3 @@ services:
     restart: always
     ports:
       - ${PMA_PORT}:80
-
