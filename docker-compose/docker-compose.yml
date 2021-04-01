@@ -5,7 +5,7 @@ services:
     image: nginx:1.19
     container_name: tecnored-nginx
     ports:
-      - "8000:8000"
+      - "5000:5000"
       - "80:80"
     volumes:
       - ./nginx/proxy_params:/etc/nginx/proxy_params
@@ -17,14 +17,14 @@ services:
     image: tecno-red/plant-management:latest
     container_name: plan-management
     ports:
-      - 80
+      - 5000
     environment:
       - PORT=${PORT}
       - HOST="0.0.0.0"
       - SECRET_KEY=A5YJzOAlml6E9GgSTB4BXc2WHB3XdA1O
       - SQLALCHEMY_DATABASE_URI=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB_NAME}
-      #- CSRF_SESSION_KEY=
-      #- FILE_ALLOWED_EXTENSIONS=
+      - CSRF_SESSION_KEY=A5YJzOAlml6E9GgSTB4BXc2WHB3XdA1O
+      - FILE_ALLOWED_EXTENSIONS=
       - DEBUG="true"
       - ENTORNO=${ENTORNO}
     depends_on:
@@ -36,6 +36,7 @@ services:
     ports:
       - ${MYSQL_PORT}:3306
     volumes:
+      - ./mysql_config.sh:/mysql_config.sh
       - ./.data/db:/var/lib/mysql
 #      - ./initdb/tecnoredDB-initdb.sql:/docker-entrypoint-initdb.d/tecnoredDB-initdb.sql
     environment:
